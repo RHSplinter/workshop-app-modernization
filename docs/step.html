@@ -11,8 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- TODO: Update the title -->
-    <title>Workshop Title</title>
+    <title>App Modernization with GitHub Copilot</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -26,8 +25,7 @@
         <div class="header-content">
             <a href="index.html" class="header-brand">
                 <span class="header-icon">🚀</span>
-                <!-- TODO: Update header title -->
-                <span class="header-title">Workshop Title</span>
+                <span class="header-title">App Modernization with GitHub Copilot</span>
             </a>
             <div class="header-nav">
                 <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
@@ -56,18 +54,17 @@
     </div>
 
     <script>
-        // TODO: Update the steps array to match your workshop/ markdown files
         const steps = [
             { id: 'readme', file: 'workshop/README.md', title: 'Workshop Overview', number: '📚' },
             { id: '00-prereqs', file: 'workshop/00-prereqs.md', title: 'Prerequisites', number: '00' },
-            { id: '01-first-exercise', file: 'workshop/01-first-exercise.md', title: 'First Exercise', number: '01' },
-            { id: '02-second-exercise', file: 'workshop/02-second-exercise.md', title: 'Second Exercise', number: '02' },
-            { id: '03-review', file: 'workshop/03-review.md', title: 'Review & Next Steps', number: '03' },
+            { id: '01-security-agent', file: 'workshop/01-security-agent.md', title: 'Create Security Analysis Agent', number: '01' },
+            { id: '02-modernization-skill', file: 'workshop/02-modernization-skill.md', title: 'Build Modernization Skill & Agent', number: '02' },
+            { id: '03-execute-migration', file: 'workshop/03-execute-migration.md', title: 'Execute the Migration', number: '03' },
+            { id: '04-review', file: 'workshop/04-review.md', title: 'Review & Next Steps', number: '04' },
         ];
 
-        // TODO: Update the GitHub org/repo name
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
-        const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/copilot-dev-days/REPO_NAME/main/';
+        const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/YOUR-USERNAME/workshop-app-modernization/main/';
 
         let currentIndex = 0;
 

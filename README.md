@@ -1,14 +1,39 @@
-# Workshop Title
+# App Modernization with GitHub Copilot
 
-<!-- TODO: Update this with your workshop details -->
+A hands-on workshop for learning how to modernize .NET Framework applications to .NET 10 using custom GitHub Copilot agents and skills.
 
-This repository contains the project for a guided workshop. Visit the published site or follow the workshop steps in the `workshop/` directory.
+## 🎯 Workshop Overview
 
-## Start the workshop
+In this 2-hour workshop, you'll learn to leverage custom GitHub Copilot agents and skills to modernize a legacy .NET Framework 4.8 Web API application. You'll discover how specialized agents dramatically improve code migration, security analysis, and modernization tasks compared to generic AI assistance.
+
+## 🚀 Start the Workshop
 
 **To begin the workshop, start at [workshop/README.md](./workshop/README.md)**
 
-Or visit the [published workshop site](https://copilot-dev-days.github.io/REPO_NAME).
+Or visit the [published workshop site](https://YOUR-USERNAME.github.io/workshop-app-modernization).
+
+## 📋 What You'll Learn
+
+- ✅ Create custom GitHub Copilot agents with domain-specific expertise
+- ✅ Build reusable skills that can be shared across agents
+- ✅ Identify security vulnerabilities in legacy code
+- ✅ Migrate .NET Framework 4.8 applications to .NET 10
+- ✅ Modernize Entity Framework 6 to EF Core 9
+- ✅ Implement async/await patterns and dependency injection
+- ✅ Compare the effectiveness of custom agents vs. generic Copilot
+
+## 🧪 Sample Application
+
+This workshop includes a real-world sample: a legacy Parts Catalog API with intentional security vulnerabilities and outdated patterns. The application demonstrates common challenges in enterprise .NET Framework applications:
+
+- SQL injection vulnerabilities
+- Missing authentication/authorization
+- Hardcoded credentials
+- Outdated dependencies (e.g., Newtonsoft.Json 9.0.1)
+- Synchronous database operations
+- Legacy configuration patterns
+
+👉 **See the sample project**: [src/PartsCatalogAPI](./src/PartsCatalogAPI)
 
 ## Repository Structure
 

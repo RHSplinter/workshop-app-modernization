@@ -1,0 +1,56 @@
+{
+  "name": ".NET Framework to .NET 10 Migration Workshop",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:1-10.0",
+  
+  "features": {
+    "ghcr.io/devcontainers/features/dotnet:2": {
+      "version": "10.0",
+      "installUsingApt": false
+    }
+  },
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        // GitHub Copilot extensions
+        "github.copilot",
+        "github.copilot-chat",
+        
+        // C# development extensions
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "ms-dotnettools.vscode-dotnet-runtime",
+        
+        // Additional helpful extensions
+        "editorconfig.editorconfig",
+        "ms-vscode.vscode-json5"
+      ],
+      "settings": {
+        "dotnet.defaultSolution": "src/PartsCatalogAPI.sln",
+        "github.copilot.enable": {
+          "*": true,
+          "plaintext": true,
+          "markdown": true,
+          "csharp": true
+        }
+      }
+    }
+  },
+
+  "postCreateCommand": "dotnet --info",
+
+  "forwardPorts": [5000, 5001],
+
+  "portsAttributes": {
+    "5000": {
+      "label": "HTTP",
+      "onAutoForward": "notify"
+    },
+    "5001": {
+      "label": "HTTPS",
+      "onAutoForward": "notify"
+    }
+  },
+
+  "remoteUser": "vscode"
+}
