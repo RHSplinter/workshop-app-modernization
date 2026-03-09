@@ -1,470 +1,260 @@
 # Exercise 2: Build a Modernization Skill & Agent
 
-**Duration:** 30 minutes
-
-In this exercise, you'll create a reusable **skill** that encodes .NET Framework → .NET 10 migration best practices, then build an **agent** that uses this skill to guide the modernization process.
-
-## Skills vs Agents: What's the Difference?
-
-### Skills
-- **Reusable knowledge modules** that can be used by multiple agents
-- Encode domain expertise, patterns, and best practices
-- Like a "textbook" or "reference guide" for specific topics
-- Example: "Framework Migration Patterns", "API Testing Strategies"
-
-### Agents
-- **AI assistants with specific roles** that use skills
-- Have personality, process, and decision-making logic
-- Like a "senior engineer" with specialized knowledge
-- Example: "Modernization Agent" that uses the migration skill
-
-> [!NOTE]
-> Think of skills as **what you know** and agents as **how you work**.
+In this exercise, you'll create a reusable **skill** that encodes .NET Framework → .NET 10 migration knowledge, then build an **agent** that uses this skill to guide the modernization of the PartsCatalogAPI.
 
 ## Objectives
 
-- Create a reusable modernization skill
-- Build an agent that leverages the skill
+- Create a reusable modernization skill with .NET Framework → .NET 10 knowledge
+- Build an agent that leverages the skill for migration guidance
 - Understand when to use skills vs agents
-- Test the agent's ability to guide migration
+- Test the agent's ability to guide the PartsCatalogAPI migration
 
-## Part 1: Create the Modernization Skill (15 minutes)
+## Part 1: Create the Migration Skill
 
-### Step 1: Create the Skill File
+### Step 1: Design Your Migration Knowledge Base
+
+You'll create a skill that documents everything needed to migrate .NET Framework 4.8 applications to .NET 10.
+
+> Reference: [Create skills (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-skills)
 
 1. Create a new folder structure:
-   ```
-   .github/
-   └── skills/
-       └── dotnet-framework-modernization/
-           └── SKILL.md
-   ```
+    ```
+    .github/
+    └── skills/
+        └── dotnet-framework-migration/
+            └── SKILL.md
+    ```
+<!-- TODO: Improve -->
+2. Design your skill. Include documentation on:
+    - Framework and API differences (System.Web → Microsoft.AspNetCore)
+    - Project structure conversion (packages.config → PackageReference style projects)
+    - Configuration migration strategies (Web.config → appsettings.json)
+    - Startup pipeline changes (Global.asax/WebApiConfig → Program.cs)
+    - Data access layer modernization (EF6 → EF Core)
+    - Known breaking changes in controllers, routing, return types, ASP.NET Core DI, and auth
+    - Phase-by-phase migration strategy
+    - Package mapping reference (what replaces old packages)
+    - Common pitfalls and how to avoid them
+    - Before/after code patterns for typical migration scenarios
 
-2. Open `SKILL.md` and add the following:
-
-```markdown
----
-name: .NET Framework to .NET 10 Migration
-description: Best practices, patterns, and breaking changes for migrating .NET Framework applications to modern .NET
-tags:
-  - dotnet
-  - migration
-  - modernization
-  - netframework
-  - net10
----
-
-# .NET Framework to .NET 10 Migration Skill
-
-This skill provides comprehensive guidance for migrating .NET Framework 4.x applications to .NET 10.
-
-## Migration Overview
-
-### What Changes
-
-| .NET Framework 4.8 | .NET 10 |
-|--------------------|---------|
-| `System.Web` | `Microsoft.AspNetCore` |
-| `packages.config` | SDK-style `<PackageReference>` |
-| `Web.config` | `appsettings.json` |
-| `Global.asax` | `Program.cs` + `Startup.cs` (or minimal APIs) |
-| `WebApiConfig` | Middleware configuration |
-| EF6 | EF Core 9+ |
-| Synchronous APIs | Async/await patterns |
-
-### Breaking Changes
-
-#### 1. System.Web Dependencies
-**Old:** `System.Web.Http.ApiController`  
-**New:** `Microsoft.AspNetCore.Mvc.ControllerBase`
-
-**Old:** `[RoutePrefix("api/products")]`  
-**New:** `[Route("api/[controller]")]`
-
-**Old:** `IHttpActionResult`  
-**New:** `IActionResult`
-
-#### 2. Dependency Injection
-**Old:** Unity, Ninject (manual setup)  
-**New:** Built-in DI container
-
-```csharp
-// Register in Program.cs
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
-```
-
-#### 3. Configuration
-**Old:** `ConfigurationManager.AppSettings["key"]`  
-**New:** `IConfiguration` injection
-
-```csharp
-public class MyController : ControllerBase
-{
-    private readonly IConfiguration _config;
-    
-    public MyController(IConfiguration config)
-    {
-        _config = config;
-    }
-}
-```
-
-#### 4. Authentication
-**Old:** `Web.config` + `[Authorize]` attribute  
-**New:** Middleware + modern auth schemes
-
-```csharp
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddJwtBearer(options => { /* config */ });
-
-app.UseAuthentication();
-app.UseAuthorization();
-```
-
-#### 5. Database Access
-**Old:** Entity Framework 6 (DbContext)  
-**New:** Entity Framework Core 9
-
-**Key differences:**
-- Async methods become primary
-- No lazy loading by default
-- Different migration commands
-- Connection string in `appsettings.json`
-
-```csharp
-// Old EF6
-public Product GetProduct(int id)
-{
-    return db.Products.Find(id);
-}
-
-// New EF Core
-public async Task<Product?> GetProductAsync(int id)
-{
-    return await db.Products.FindAsync(id);
-}
-```
-
-## Migration Strategy
-
-### Phase 1: Project File Conversion
-1. Convert to SDK-style project file
-2. Update target framework: `<TargetFramework>net10.0</TargetFramework>`
-3. Convert `packages.config` to `PackageReference`
-4. Remove unnecessary references (System.Web, etc.)
-
-### Phase 2: Update Dependencies
-1. Replace `Microsoft.AspNet.WebApi` with `Microsoft.AspNetCore.App`
-2. Update EF6 to EF Core 9
-3. Update all NuGet packages to .NET 10 compatible versions
-4. Remove packages that are now part of the framework
-
-### Phase 3: Code Modernization
-1. Replace `ApiController` with `ControllerBase`
-2. Update return types (`IHttpActionResult` → `IActionResult`)
-3. Add async/await to all I/O operations
-4. Replace `Web.config` settings with `appsettings.json`
-5. Update routing attributes
-6. Implement proper DI patterns
-
-### Phase 4: Configuration & Middleware
-1. Create `Program.cs` with service registration
-2. Configure middleware pipeline (auth, CORS, etc.)
-3. Migrate connection strings
-4. Configure logging and health checks
-
-### Phase 5: Testing & Validation
-1. Ensure all endpoints work
-2. Verify authentication/authorization
-3. Run security scan again
-4. Performance testing
-
-## Common Pitfalls
-
-1. **Forgetting to make methods async** - All I/O should be async
-2. **Not updating connection strings** - They move from Web.config to appsettings.json
-3. **Missing middleware order** - Auth must come after routing
-4. **Breaking change in model binding** - FromBody is explicit in .NET Core
-5. **Missing nullable reference types** - Consider enabling for better safety
-
-## Package Mapping
-
-| .NET Framework Package | .NET 10 Replacement |
-|------------------------|---------------------|
-| `Microsoft.AspNet.WebApi.Core` | `Microsoft.AspNetCore.App` |
-| `EntityFramework` | `Microsoft.EntityFrameworkCore` |
-| `Newtonsoft.Json` | `System.Text.Json` (or keep Newtonsoft) |
-| `Unity` / `Ninject` | Built-in DI |
-| `Swashbuckle` (WebAPI) | `Swashbuckle.AspNetCore` |
-
-## Testing Checklist
-
-After migration, verify:
-
-- [ ] All HTTP verbs (GET, POST, PUT, DELETE) work
-- [ ] Authentication tokens are validated
-- [ ] Database queries execute correctly
-- [ ] Configuration loads from appsettings.json
-- [ ] HTTPS redirection works
-- [ ] CORS policy is configured (if needed)
-- [ ] Health check endpoint responds
-- [ ] Swagger/OpenAPI docs generate correctly
-
-## Modern Enhancements
-
-Consider adding:
-
-1. **Minimal APIs** - Lighter weight for simple endpoints
-2. **Health Checks** - `/health` endpoint for monitoring
-3. **OpenTelemetry** - Distributed tracing
-4. **Rate Limiting** - Built-in rate limiting middleware
-5. **Output Caching** - New in .NET 7+
-6. **Native AOT** - Faster startup and smaller deployments
-
-## Security Improvements
-
-- ✅ Enable HTTPS redirection
-- ✅ Implement JWT authentication
-- ✅ Use parameterized queries (EF Core does this automatically)
-- ✅ Enable request validation
-- ✅ Configure CORS properly
-- ✅ Use secrets management (Azure Key Vault, User Secrets)
-
-## Resources
-
-- [Official .NET Upgrade Assistant](https://dotnet.microsoft.com/platform/upgrade-assistant)
-- [Breaking Changes Documentation](https://learn.microsoft.com/en-us/dotnet/core/compatibility/)
-- [ASP.NET Core Migration Guide](https://learn.microsoft.com/en-us/aspnet/core/migration/)
-```
-
-3. Save the file
-
+<!-- TODO: Improve -->
 > [!TIP]
-> This skill is now reusable across ALL .NET Framework migration projects!
+> Look at the PartsCatalogAPI structure to inform your skill:
+> - [ProductsController.cs](../src/PartsCatalogAPI/Controllers/ProductsController.cs) uses `ApiController` and `IHttpActionResult`
+> - [PartsCatalogContext.cs](../src/PartsCatalogAPI/Data/PartsCatalogContext.cs) uses Entity Framework 6 patterns
+> - [Web.config](../src/PartsCatalogAPI/Web.config) has connection strings and app settings
+> - [packages.config](../src/PartsCatalogAPI/packages.config) lists legacy packages
 
-### Step 2: Verify Skill is Available
+Also consider documenting a phase-by-phase migration strategy:
+1. **Phase 1**: Project file conversion (SDK-style, target framework)
+2. **Phase 2**: Dependencies (package updates, remove System.Web)
+3. **Phase 3**: Code patterns (controllers, async/await, DI)
+4. **Phase 4**: Configuration (appsettings.json, middleware)
+5. **Phase 5**: Testing & validation
 
-Skills don't appear as `@mentions`, but agents can reference them. Let's test:
+Also include package mapping guidance:
+- What replaces `Microsoft.AspNet.WebApi.Core`?
+- What's the EF Core equivalent of `EntityFramework` 6.1.3?
+- Should `Newtonsoft.Json` 9.0.1 be updated or replaced with `System.Text.Json`?
+- What happens to Unity/Ninject? (Built-in DI)
 
-1. Open Copilot Chat
-2. Ask: "What skills are available for .NET migration?"
-3. Copilot should recognize your skill in `.github/skills/`
+Also include common pitfalls:
+- Forgetting async/await patterns
+- Connection string location changes
+- Middleware ordering (CRITICAL: UseAuthentication before UseAuthorization)
+- Model binding differences (FromBody explicit in .NET Core)
+- Nullable reference types considerations
 
-## Part 2: Create the Modernization Agent (15 minutes)
+Also include before/after examples for common patterns:
+- Controller action migration
+- Async database calls
+- Configuration access
+- Dependency injection setup
 
-### Step 3: Build the Agent That Uses the Skill
 
-1. Create `.github/agents/modernization-expert.agent.md`:
+> [!NOTE]
+> The skill should be comprehensive - it's your team's migration reference. But don't make it a full tutorial; focus on the patterns and decisions specific to .NET Framework → .NET 10.
 
-```markdown
----
-name: .NET Modernization Expert
-description: Guides safe migration from .NET Framework to modern .NET with context-aware recommendations
-expertise:
-  - .NET Framework to .NET 10 migration
-  - Breaking changes and compatibility
-  - Async/await patterns
-  - Modern ASP.NET Core patterns
-skills:
-  - dotnet-framework-modernization
----
+3. Save your skill definition
 
-# .NET Modernization Expert
 
-You are a senior .NET engineer specializing in migrating legacy .NET Framework applications to modern .NET. You understand the full migration path from project files to runtime behavior.
+## Part 2: Create the Modernization Agent
 
-## Your Skills
+### Step 2: Design an Agent That Uses Your Skill
 
-You have access to the `dotnet-framework-modernization` skill that contains:
-- Breaking changes reference
-- Migration patterns
-- Package mappings
-- Testing checklists
+Now you'll create an agent that can consult your migration skill and guide developers through the modernization process.
 
-Refer to this skill when answering migration questions.
+> Reference: [Create custom agents (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
 
-## Your Role
+1. Create `.github/agents/modernization-expert.agent.md`
+2. Design your agent in any format you prefer. Include guidance on:
+    - Role and behavior (what kind of migration expert it should act like)
+    - How it should use the migration skill for framework-specific decisions
+    - Preferred workflow (assess, plan, guide, validate, enhance)
+    - Code response style (show current state, propose changes, explain why, include validation steps)
+    - Principles to preserve (maintain behavior, migrate incrementally, consider trade-offs, keep security in scope)
+3. Save your agent definition
 
-1. **Assess** - Analyze the current codebase structure
-2. **Plan** - Create a step-by-step migration plan
-3. **Guide** - Walk through each change with explanations
-4. **Validate** - Verify changes maintain functionality
-5. **Enhance** - Suggest modern improvements
-
-## Your Process
-
-When asked to modernize code:
-
-1. **Show Current State** - Explain what the code currently does
-2. **Identify Issues** - Point out Framework-specific patterns
-3. **Provide Modern Version** - Show the .NET 10 equivalent
-4. **Explain Changes** - Describe WHY each change is needed
-5. **Test Guidance** - Suggest how to verify the change works
-
-## Important Principles
-
-- **Maintain Functionality** - Changes should preserve behavior
-- **Incremental Migration** - One component at a time
-- **Explain Trade-offs** - Modern isn't always "better" - explain when
-- **Context Awareness** - Remember changes across files
-- **Security First** - Fix security issues during migration
-
-## Example Interaction
-
+**Example Interaction Pattern** - Show the agent how to respond:
+```
 User: "Modernize ProductsController"
 
-You should:
-1. Analyze the current controller code
-2. Identify .NET Framework patterns (IHttpActionResult, sync methods)
-3. Provide modernized version with ControllerBase, async/await
-4. Explain each change (why IActionResult, why async)
-5. Note any dependencies that need updating (repository layer)
-6. Suggest testing approach
-
-## Communication Style
-
-- **Be specific** - Reference exact files and line numbers
-- **Show code** - Always provide before/after examples
-- **Explain impact** - Describe downstream effects
-- **Stay pragmatic** - Focus on what matters for this migration
-- **Remember context** - Track what you've already updated
-
-## You Don't Just Modernize - You Teach
-
-Help developers understand:
-- Why .NET 10 is structured differently
-- What modern patterns solve
-- When to use new features vs keep old patterns
-- How changes affect performance, security, maintainability
+Agent should:
+1. Analyze current controller (base class, return types, sync methods)
+2. Identify Framework patterns that need updating
+3. Provide modernized version with explanations
+4. Note downstream impacts (repository layer, tests)
+5. Suggest validation steps
 ```
 
-2. Save the file
+<!-- TODO: Validate if true -->
+> [!TIP]
+> Your agent can reference the security agent too. Consider adding a principle: "Consult the security agent for vulnerability fixes during migration."
 
-### Step 4: Test Your Modernization Agent
+### Step 3: Test Your Agent and Skill Together
 
-Let's see if your agent can guide migration:
+Let's verify your agent can guide the PartsCatalogAPI migration:
 
-1. Open Copilot Chat
-2. Test with this prompt:
+1. Open Copilot Chat (`Ctrl+I`)
+2. Use the agent dropdown to select your modernization agent
+<!-- TODO: Improve -->
+3. Ask the agent to analyze the ProductsController and provide a migration plan. Include details about:
+    - The current code structure (inherits from ApiController, returns IHttpActionResult, uses sync database calls)
+    - What needs to change and why
+    - A modernized version using .NET 10 patterns
+    - Dependencies that need updating
+    - How to validate the changes work
+<!-- TODO: Validate if true -->
+4. **Evaluate the response:**
+    - Does the agent reference the migration skill?
+    - Does it provide specific code examples?
+    - Does it explain breaking changes clearly?
+    - Does it mention async/await requirements?
+    - Does it note EF Core migration needs?
 
-```
-@modernization-expert 
+### Step 4: Compare Agent Approaches
 
-I need to migrate the ProductsController from .NET Framework 4.8 to .NET 10.
+Switch to your **Security Agent** in the dropdown and ask it to review the ProductsController migration plan, flagging any security concerns that should be addressed during the modernization.
 
-Current controller:
-- Uses ApiController base class
-- Returns IHttpActionResult
-- Has synchronous database calls
-- Uses string concatenation for SQL (security issue!)
-
-Please:
-1. Analyze the current code
-2. Provide the modernized version
-3. Explain each major change
-4. Note any dependencies I'll need to update
-5. Suggest how to test the changes
-```
-
-3. Review the response. Your agent should:
-   - Reference the migration skill
-   - Provide specific code examples
-   - Explain breaking changes
-   - Note async/await requirements
-   - Mention EF Core migration needs
-
-### Step 5: Compare Agents
-
-Now ask the same question to your **Security Agent**:
-
-```
-@security-modernization
-
-Review this migration plan for ProductsController and flag any security concerns.
-```
-
-Notice how each agent approaches the same code differently:
-- **Modernization Agent**: Focuses on patterns and framework changes
-- **Security Agent**: Focuses on vulnerabilities and secure coding
+**Notice the difference:**
+- **Modernization Agent**: Focuses on framework patterns, breaking changes, best practices
+- **Security Agent**: Focuses on vulnerabilities, secure coding, authentication
+- **Both together**: Comprehensive migration that's secure and modern!
 
 > [!TIP]
-> You can use BOTH agents together! One plans the migration, the other validates security.
+> You can switch agents in the dropdown during the same conversation:
+> ```
+> Select the modernization agent and ask: provide the migration approach
+> Switch to the security agent and ask: review for security issues
+> ```
 
-### Step 6: Create a Migration Plan
+### Step 5: Create a Complete Migration Plan
 
-Ask your modernization agent to create a complete plan:
+1. With your modernization agent selected, ask it to create a step-by-step migration plan for PartsCatalogAPI.
+    - Breakdown into migration phases
+    - File-by-file changes required
+    - Dependencies between changes
+    - Security fixes to include
+    - Testing checkpoints and validation strategy
+
+2. Save the generated plan:
+    - Create `migration-plan.md`
+    - Paste the agent's response
+    - Review and refine with your team's specific needs
+
+## Understanding Skills vs Agents
+
+### When to Create a Skill
+
+Use skills when you have:
+- **Reusable knowledge** that applies across multiple projects
+- **Reference information** like API mappings, breaking changes
+- **Best practices** that don't change per project
+- **Domain expertise** multiple agents might need
+
+Examples:
+- `.NET Framework migration patterns` (this exercise)
+- `TypeScript coding standards`
+- `Azure architecture patterns`
+- `API security checklist`
+
+### When to Create an Agent
+
+Use agents when you need:
+- **Specialized workflows** with specific processes
+- **Role-based assistance** (security auditor, migration guide)
+- **Contextual decision-making** that varies per situation
+- **Personality/communication style** for different tasks
+
+Examples:
+- `Security Modernization Expert` (Exercise 1)
+- `.NET Modernization Expert` (this exercise)
+- `Code Review Agent`
+- `Documentation Writer`
+
+### Can Agents Work Together?
+
+**Yes!** Agents can reference each other:
 
 ```
-@modernization-expert
-
-Create a complete migration plan for the entire ProductCatalogAPI application.
-
-Include:
-1. Project file changes
-2. Package updates (with version numbers)
-3. Code changes (prioritized by component)
-4. Configuration migration (Web.config → appsettings.json)
-5. Testing strategy
-6. Estimated effort per component
-
-Save this as docs/migration-plan.md
+Select the modernization agent: Plan the ProductsController migration
+Switch to the security agent: Review the plan for security issues
+Switch back to the modernization agent: Update the plan based on security feedback
 ```
 
-### Step 7: Save and Commit
-
-```bash
-git add .github/skills/dotnet-framework-modernization/
-git add .github/agents/modernization-expert.agent.md
-git add docs/migration-plan.md
-git commit -m "Add modernization skill and agent with migration plan"
-```
-
-## Understanding Skills vs Agents in Action
-
-### The Skill (Knowledge)
-- Contains facts about .NET migration
-- Reusable across projects and agents
-- Like a reference manual
-
-### The Agent (Application)
-- Uses the skill to make decisions
-- Has personality and process
-- Maintains context across conversation
-- Like a consultant who read the manual
+This creates a **multi-agent workflow** where specialized agents collaborate!
 
 ## Success Criteria
 
-- [ ] Modernization skill created with migration patterns
-- [ ] Modernization agent created that references the skill
-- [ ] Agent provides specific, contextual migration guidance
-- [ ] Agent explains WHY changes are needed, not just WHAT
-- [ ] Migration plan generated and saved
-- [ ] You understand the difference between skills and agents
-- [ ] Changes committed to Git
+- [ ] Created modernization skill in `.github/skills/dotnet-framework-migration/SKILL.md`
+- [ ] Skill documents breaking changes, package mappings, migration phases
+- [ ] Created modernization agent that references the skill
+- [ ] Agent provides context-aware migration guidance
+- [ ] Tested agent on PartsCatalogAPI controllers
+- [ ] Generated complete migration plan
+- [ ] Understand when to use skills vs agents
+- [ ] See how agents can work together
 
 ## Troubleshooting
 
 **Agent not using the skill?**
-- Check the `skills:` array in agent frontmatter
-- Skill name must match folder name
-- Try asking "What skills do you have access to?"
+- Verify the skill folder name matches what your agent instructions reference
+- Make sure the skill's SKILL.md file exists
+- Verify the description of the skill matches the intent
+- Try explicitly asking: "Consult your migration skill for breaking changes"
 
 **Agent responses too generic?**
-- Add more specific patterns to the skill
-- Improve agent instructions with examples
-- Provide more context in your prompts
+- Add more specific instructions in the agent definition
+- Include example interactions showing desired behavior
+- Make the agent's process clearer (step 1, step 2, etc.)
 
-**Can't decide skill vs agent?**
-- If it's reusable knowledge → Skill
-- If it's a role/process → Agent
-- Agents can use multiple skills!
+**Skill too detailed or overwhelming?**
+- Focus on key patterns and decisions, not exhaustive documentation
+- Use tables for quick reference (package mappings)
+- Link to official docs for deep dives
+
+**Agents contradicting each other?**
+- This is good! Different perspectives catch different issues
+- Consolidate recommendations from both agents
+- Update agent definitions to acknowledge each other
 
 ## Reflection Questions
 
-1. What migration patterns would you add to the skill based on your experience?
-2. How could you create skills for other domains (testing, performance, architecture)?
-3. What other agents could use this modernization skill?
+1. What information belongs in a skill vs in an agent definition?
+2. How does your modernization agent's guidance differ from generic Copilot?
+3. When would you create additional agents that use the same migration skill?
+4. How could you extend the migration skill for your company's specific patterns?
+5. What other agent + skill combinations would be useful for your team?
+
+## Next Steps
+
+You now have:
+- ✅ A security agent that identifies vulnerabilities
+- ✅ A migration skill with .NET Framework → .NET 10 knowledge
+- ✅ A modernization agent that guides the migration process
+- ✅ A complete migration plan for PartsCatalogAPI
 
 ---
 
-**Ready to actually modernize the code?** Proceed to [Exercise 3: Execute the Migration](./03-execute-migration.md).
+**Ready to execute the migration?**  
+Proceed to [Exercise 3: Execute the Migration](./03-execute-migration.md).

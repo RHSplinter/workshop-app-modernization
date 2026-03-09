@@ -2,6 +2,10 @@
 
 Before starting this workshop, make sure you have the following set up. This should take about 10 minutes.
 
+Helpful references:
+- [Create custom agents (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
+- [Create skills (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-skills)
+
 ## Required Tools
 
 - [ ] **GitHub Account** with an active Copilot subscription (Pro, Pro+, Business, or Enterprise)
@@ -78,18 +82,18 @@ If not, you can:
 
 ### 6. Explore the Legacy Application
 
-The sample application is in the `src/ProductCatalogAPI` folder (we'll create this together, or it might already exist).
+The sample application is in the `src/ProductCatalogAPI` folder
 
 Take a moment to explore the structure:
 
 ```
 ProductCatalogAPI/
-├── Controllers/          # API controllers
-├── Models/              # Data models
-├── Data/                # EF6 DbContext
 ├── App_Start/           # Web API configuration
-├── Web.config           # Legacy configuration
-└── packages.config      # Old-style package management
+├── Controllers/         # API controllers
+├── Data/                # EF6 DbContext
+├── Models/              # Data models
+├── packages.config      # Old-style package management
+└── Web.config           # Legacy configuration
 ```
 
 ## Understanding the Challenge
@@ -131,10 +135,11 @@ By the end of this workshop, you'll have an agent that:
 - [ ] Repository forked and cloned
 - [ ] VS Code open with the project
 - [ ] GitHub Copilot active and responding
-- [ ] .NET SDK 8+ installed and working
+- [ ] .NET SDK 10 installed and working
 - [ ] SQL Server LocalDB available
 - [ ] You understand the challenge ahead
 
 ---
 
-**Ready to begin?** Proceed to [Exercise 1: Create a Security Agent](./01-security-agent.md).
+**Ready to begin?**  
+Proceed to [Exercise 1: Create a Security Agent](./01-security-agent.md).

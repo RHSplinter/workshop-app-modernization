@@ -1,233 +1,228 @@
-# Exercise 1: Create a Security Agent
+# Exercise 1: Security Analysis with Custom Agents
 
-**Duration:** 25 minutes
-
-In this exercise, you'll create a custom GitHub Copilot agent that specializes in security analysis for .NET applications. This agent will identify vulnerabilities, outdated packages, and insecure coding patterns.
+In this exercise, you'll discover the power of custom agents by comparing generic Copilot security analysis with a specialized security agent. You'll see firsthand why custom agents matter for complex tasks like security auditing.
 
 ## Why a Security Agent?
 
 Generic Copilot doesn't know:
 - **Your organization's security standards** (OWASP compliance, specific CVE thresholds)
-- **Your framework-specific risks** (.NET Framework security issues vs .NET Core)
-- **Your security priorities** (what's critical vs nice-to-have)
+- **Your framework-specific risks** (Framework vulnerabilities, legacy authentication patterns)
+- **Your security priorities** (what must be fixed before migration vs what can wait)
+- **Your reporting requirements** (how to categorize and communicate findings)
 
-A custom security agent encodes this knowledge and applies it consistently.
+A custom security agent encodes this knowledge and applies it consistently across your codebase.
 
 ## Objectives
 
-- Create a custom agent definition file
-- Define security expertise and scanning capabilities
-- Run a comprehensive security audit
-- Generate a prioritized vulnerability report
+- Run a baseline security analysis with a generic agent
+- Create a custom security agent with specialized knowledge
+- Compare results to see the "before/after" difference
+- Generate a prioritized vulnerability report for migration planning
 
-## Part 1: Create the Security Agent (10 minutes)
+## Part 1: Baseline Security Scan
 
-### Step 1: Create the Agent File
+Let's start by seeing what a generic agent finds in our PartsCatalogAPI application.
 
-1. In VS Code, create a new folder structure:
-   ```
-   .github/
-   └── agents/
-       └── security-modernization.agent.md
-   ```
+### Step 1: Review the Application Structure
 
-2. Open the new file and add the following agent definition:
+The `src/PartsCatalogAPI` folder contains a .NET Framework 4.8 Web API with:
+- **Controllers**: [ProductsController.cs](../src/PartsCatalogAPI/Controllers/ProductsController.cs), [CategoriesController.cs](../src/PartsCatalogAPI/Controllers/CategoriesController.cs)
+- **Data Layer**: Entity Framework 6 DbContext in [PartsCatalogContext.cs](../src/PartsCatalogAPI/Data/PartsCatalogContext.cs)
+- **Models**: Product and Category classes
+- **Configuration**: [Web.config](../src/PartsCatalogAPI/Web.config) with connection strings and app settings
+- **Dependencies**: [packages.config](../src/PartsCatalogAPI/packages.config) with legacy package references
 
-```markdown
----
-name: Security Modernization Expert
-description: Specialized agent for identifying security vulnerabilities in .NET Framework applications during modernization
-expertise:
-  - .NET Framework security patterns and anti-patterns
-  - Common Vulnerabilities and Exposures (CVE) analysis
-  - OWASP Top 10 compliance
-  - Package dependency security auditing
-  - Authentication and authorization implementation
----
+### Step 2: Run a Generic Security Analysis
 
-# Security Modernization Expert
-
-You are a security expert specializing in .NET application modernization with a focus on identifying and remediating security vulnerabilities.
-
-## Your Expertise
-
-### Security Analysis
-- Identify SQL injection vulnerabilities (string concatenation in queries)
-- Detect missing authentication and authorization
-- Find hardcoded credentials and connection strings
-- Audit packages for known CVEs
-- Check for missing input validation
-- Identify insecure cryptographic practices
-
-### .NET Framework Specific Issues
-- Legacy `System.Web` security issues
-- Missing HTTPS enforcement
-- Weak authentication schemes (Basic, Forms without proper configuration)
-- Session management vulnerabilities
-- XML external entity (XXE) vulnerabilities
-- Deserialization vulnerabilities
-
-### Reporting Standards
-When analyzing code, provide:
-1. **Severity** (Critical, High, Medium, Low)
-2. **Issue Description** (what's wrong and why it matters)
-3. **Location** (file, line number, method)
-4. **Remediation** (specific fix for this codebase)
-5. **Priority** (should this be fixed before migration, during, or after?)
-
-## Your Process
-
-1. **Scan** - Analyze all source files for security issues
-2. **Prioritize** - Rank by severity and impact on migration
-3. **Categorize** - Group by type (injection, auth, crypto, dependencies)
-4. **Recommend** - Provide actionable fixes with code examples
-5. **Report** - Generate a structured markdown report
-
-## Important Rules
-
-- Always provide specific file paths and line numbers
-- Include CVE numbers when referencing known vulnerabilities
-- Consider the migration context (some issues can be fixed during modernization)
-- Don't just list issues - explain WHY each matters
-- Provide modern .NET alternatives for legacy patterns
-```
-
-3. Save the file (`Ctrl+S`)
+1. Open GitHub Copilot Chat (`Ctrl+I` on Windows or `Cmd+I` on Mac)
+2. Ask generic Copilot to scan the PartsCatalogAPI application. Request a comprehensive security audit.
+3. Observe the results:
+    - How comprehensive is the analysis?
+    - Does it check [Web.config](../src/PartsCatalogAPI/Web.config) for hardcoded credentials?
+    - Does it identify the outdated Newtonsoft.Json package (v9.0.1 - released 2016)?
+    - Does it recognize patterns specific to .NET Framework security risks?
 
 > [!TIP]
-> The frontmatter (YAML between `---`) defines metadata. The markdown body is the agent's personality and instructions.
+> Save this response - you'll compare it with the custom agent results later.
 
-### Step 2: Verify the Agent is Recognized
+## Part 2: Create a Custom Security Agent
+
+### Step 1: Design Your Security Agent
+
+Now you'll create a specialized agent that knows how to scan .NET Framework applications for security vulnerabilities with migration context.
+
+> Reference: [Create custom agents (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
+
+> Reference: [Custom Agent Configuration (GitHub Docs)](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+
+1. Create a new folder structure:
+    ```
+    .github/
+    └── agents/
+        └── security-expert.agent.md
+    ```
+<!-- TODO: Improve -->
+2. Design your agent definition. Include guidance on:
+    - Security vulnerability types to detect (SQL injection, auth issues, hardcoded secrets, package CVEs, input validation)
+    - Reporting expectations (severity levels, file paths/line numbers, remediation, migration timing)
+    - Analysis workflow (scan, prioritize, categorize, recommend, report)
+    - Quality rules (include CVE references when possible, explain why each issue matters, suggest modern .NET alternatives)
+3. Save your agent definition
+
+> [!TIP]
+> Look at the actual vulnerabilities in [ProductsController.cs](../src/PartsCatalogAPI/Controllers/ProductsController.cs) (SQL injection on lines 38-48) and [Web.config](../src/PartsCatalogAPI/Web.config) (hardcoded credentials) to inform your agent's focus areas.
+
+### Step 2: Verify and Test Your Agent
 
 1. Open GitHub Copilot Chat
-2. Type `@` and look for your custom agent in the suggestions
-3. You should see "Security Modernization Expert" appear
+2. Use the agent selector dropdown in the chat interface and choose your custom agent
+3. You should see your agent name appear (e.g., "Security Expert")
 
 > [!NOTE]
 > If you don't see it, try:
 > - Reload VS Code window (`Ctrl+Shift+P` → "Reload Window")
-> - Check that the file path is exactly `.github/agents/security-modernization.agent.md`
+> - Check that the file path is exactly `.github/agents/security-expert.agent.md`
 > - Verify the YAML frontmatter is valid
 
-## Part 2: Run Security Audit (15 minutes)
+## Part 3: Specialized Security Scan
 
-### Step 3: Scan the Legacy Application
+### Step 1: Run Targeted Security Scan with Your Agent
 
-Now let's use your custom agent to audit the Product Catalog API.
+Now let's see how your custom agent performs on the same analysis:
 
 1. Open Copilot Chat (`Ctrl+I`)
-2. Invoke your custom agent:
+2. Use the agent dropdown to select your custom agent
+<!-- TODO: Improve -->
+3. Request a comprehensive security audit of the PartsCatalogAPI. Ask for:
+   - Analysis of all controllers for injection vulnerabilities
+   - Review of packages.config for known CVEs
+   - Configuration files checked for exposed secrets and insecure settings
+   - Evaluation of authentication and authorization implementation
+   - Assessment of data access patterns
+   - A prioritized report with severity levels and remediation guidance
+4. **Compare the results** with your baseline scan from Part 1:  
+   **What improved?**
+   <!-- TODO: Improve -->
+   - Does the agent provide more specific line numbers?
+   - Is the SQL injection vulnerability in `SearchProducts()` explained better?
+   - Does it identify the hardcoded credentials in [Web.config](../src/PartsCatalogAPI/Web.config)?
+   - Are findings categorized by severity?
+   - Does it suggest modern .NET alternatives?
 
-```
-@security-modernization Please perform a comprehensive security audit of the ProductCatalogAPI application. 
+### Step 2: Deep Dive on Critical Issues
 
-Analyze:
-- All controller files for injection vulnerabilities
-- Package dependencies for known CVEs
-- Authentication and authorization implementation
-- Data access patterns for security issues
-- Configuration files for exposed secrets
+Ask your agent to analyze the `SearchProducts()` and `GetCategoryByName()` methods. Request:
+<!-- TODO: Improve -->
+- An explanation of why these methods are vulnerable to SQL injection
+- The potential impact of these vulnerabilities
+- How to fix them during migration to .NET 10 (including code examples using EF Core)
+- Before/after code comparisons
 
-Provide a prioritized report with:
-1. Critical issues that must be fixed
-2. High priority issues for the migration
-3. Medium/Low issues that can be addressed later
+### Step 3: Generate Migration-Ready Security Report
 
-For each issue, include specific file paths and remediation guidance.
-```
+<!-- TODO: Improve -->
+1. Ask your agent to create a structured security report that includes:
+    - An executive summary with vulnerability counts organized by severity
+    - Critical findings with specific file paths and line numbers referenced
+    - Code snippets showing the vulnerable patterns
+    - A remediation roadmap indicating what to fix before, during, and after migration
+    - Package upgrade recommendations with specific version numbers
+2. Request the output to be saved to `SECURITY_AUDIT.md`.
 
-3. Review the agent's response
+## Reflection: What's Different?
 
-> [!TIP]
-> The agent should identify:
-> - SQL injection in ProductsController (string concatenation)
-> - Outdated packages with CVEs (Newtonsoft.Json, Entity Framework)
-> - Missing authentication/authorization attributes
-> - Hardcoded connection string in Web.config
-> - No HTTPS enforcement
-> - Synchronous database calls (while not security, impacts reliability)
-
-### Step 4: Generate Security Report
-
-Ask your agent to create a structured report:
-
-```
-@security-modernization Create a markdown security report that I can save to docs/security-audit.md. 
-
-Include:
-- Executive summary with vulnerability counts by severity
-- Detailed findings with code snippets
-- Remediation roadmap (what to fix when during migration)
-- Before/after examples for critical issues
-```
-
-### Step 5: Save and Commit the Report
-
-1. Create `docs/security-audit.md` with the generated content
-2. Review the findings - do they make sense?
-3. Commit the report:
-
-```bash
-git add .github/agents/security-modernization.agent.md
-git add docs/security-audit.md
-git commit -m "Add security agent and initial audit report"
-```
-
-## Understanding What Just Happened
-
-### Without Custom Agent
-- Generic advice about "updating packages"
-- No context about your specific framework version
-- Missing framework-specific vulnerabilities
-- No prioritization for migration context
+### Without Custom Agent (Baseline)
+- ❌ Generic advice about "updating packages"
+- ❌ Missing context about .NET Framework 4.8 specific issues
+- ❌ No migration-aware prioritization
+- ❌ Inconsistent reporting format
+- ❌ May miss framework-specific vulnerabilities
 
 ### With Custom Agent
-- Targeted analysis of .NET Framework security issues
-- Specific CVE identification
-- Migration-aware prioritization
-- Actionable remediation steps
-- Consistent reporting format
+- ✅ Targeted .NET Framework security analysis
+- ✅ Specific CVE identification with package versions
+- ✅ Migration-context prioritization (fix before/during/after)
+- ✅ Consistent, structured reporting
+- ✅ Actionable remediation with code examples
+- ✅ Understanding of legacy patterns vs modern alternatives
 
 ## Common Findings You Should See
 
-1. **Critical: SQL Injection** in `ProductsController.Search()` method
-2. **Critical: Missing Authentication** - no `[Authorize]` attributes
-3. **High: Outdated Packages** - Newtonsoft.Json 9.0.1 has known CVEs
-4. **High: Hardcoded Connection String** in `Web.config`
-5. **Medium: No HTTPS Enforcement** - API accepts HTTP requests
-6. **Medium: No Input Validation** - controllers accept raw input
+Your agent should identify issues like these in the PartsCatalogAPI:
+
+1. **Critical: SQL Injection**
+   - **Location**: [ProductsController.cs](../src/PartsCatalogAPI/Controllers/ProductsController.cs) `SearchProducts()` method (line ~43)
+   - **Issue**: String concatenation: `"SELECT * FROM Products WHERE Name LIKE '%" + name + "%'"`
+   - **Impact**: Attacker can execute arbitrary SQL queries
+
+2. **Critical: SQL Injection**
+   - **Location**: [CategoriesController.cs](../src/PartsCatalogAPI/Controllers/CategoriesController.cs) `GetCategoryByName()` method (line ~43)
+   - **Issue**: String concatenation: `"SELECT * FROM Categories WHERE Name = '" + name + "'"`
+
+3. **Critical: Missing Authentication**
+   - **Location**: Both controllers
+   - **Issue**: No `[Authorize]` attributes on controllers or actions
+   - **Impact**: Unauthenticated users can modify data
+
+4. **High: Hardcoded Credentials**
+   - **Location**: [Web.config](../src/PartsCatalogAPI/Web.config)
+   - **Issue**: Admin credentials and API keys in clear text
+   - **Secrets**: AdminUsername, AdminPassword, ApiKey
+
+5. **High: Outdated Packages with CVEs**
+   - **Location**: [packages.config](../src/PartsCatalogAPI/packages.config)
+   - **Issue**: Newtonsoft.Json 9.0.1 (2016) - multiple known CVEs
+   - **Issue**: Entity Framework 6.1.3 (2015) - outdated
+
+6. **Medium: No HTTPS Enforcement**
+   - **Location**: [Web.config](../src/PartsCatalogAPI/Web.config)
+   - **Issue**: API accepts HTTP requests without redirect
+
+7. **Medium: Synchronous Database Operations**
+   - **Location**: All controller methods
+   - **Issue**: Using `Find()`, `ToList()` instead of async patterns
 
 ## Success Criteria
 
-- [ ] Custom security agent created and recognized by Copilot
-- [ ] Security audit completed with specific findings
-- [ ] Security report generated with severity levels
-- [ ] Report saved to `docs/security-audit.md`
-- [ ] Changes committed to Git
-- [ ] You understand why each finding matters
+- [ ] Completed baseline security scan with generic agent
+- [ ] Created custom security agent with specialized expertise
+- [ ] Agent is recognized in Copilot Chat (appears in the agent dropdown)
+- [ ] Ran comparative analysis showing improved results
+- [ ] Generated structured security report
+- [ ] Security report saved
+- [ ] You can explain the difference custom agents make
 
 ## Troubleshooting
 
-**Agent not appearing in @ mentions?**
-- Check file path: `.github/agents/*.agent.md`
-- Validate YAML frontmatter syntax
+**Agent not appearing in the chat dropdown?**
+- Check file path: Must be `.github/agents/*.agent.md`
+- Review the GitHub docs for expected custom agent formatting
 - Reload VS Code window
+- Ensure your intended agent name appears in the agent definition
 
-**Agent gives generic responses?**
-- Review the agent definition - it might need more specific instructions
-- Ask more targeted questions with specific files/patterns
-- Provide more context in your prompts
+**Agent gives generic responses similar to baseline?**
+- Review the agent definition - be more specific about expertise and process
+- Provide more detailed and relevant instructions
+- Ask more targeted questions with specific file paths
 
-**Not seeing security issues?**
-- Make sure you're analyzing the legacy .NET Framework app, not a modern one
-- Ask the agent to specifically look for SQL injection and auth issues
+**Not seeing all security issues?**
+- Use references to directories and files in prompts.
+- Ask the agent to specifically look for patterns (SQL injection, missing auth, hardcoded secrets)
+- Review the agent's expertise section - does it cover these areas?
+
+**Responses are too brief?**
+- Update your agent's reporting standards to require detailed explanations
+- Ask follow-up questions referencing specific files and line numbers
 
 ## Reflection Questions
 
-1. What security issues did you find that you might have missed without the agent?
-2. How does the agent's prioritization help with migration planning?
-3. What other security expertise could you encode in an agent for your organization?
+1. What security issues did your custom agent find that generic Copilot missed?
+2. How does having a specialized agent change the quality and depth of analysis?
+3. What other security expertise could you encode for your organization's needs?
+4. How would you evolve this agent based on your company's security standards?
+5. What role will this security context play during the actual migration process?
 
 ---
 
-**Ready to encode modernization expertise?** Proceed to [Exercise 2: Build a Modernization Skill](./02-modernization-skill.md).
+**Ready to encode modernization expertise?**  
+Proceed to [Exercise 2: Build a Modernization Skill](./02-modernization-skill.md).

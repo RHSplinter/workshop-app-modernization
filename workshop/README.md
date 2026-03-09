@@ -6,6 +6,10 @@ Welcome to this hands-on workshop! Transform complex modernization projects into
 
 Learn to build custom GitHub Copilot agents and skills that transform risky modernization projects from weeks into hours. You'll create security-aware agents that audit your codebase, identify vulnerabilities, and execute framework upgrades while maintaining context across hundreds of files.
 
+Official references:
+- [Create custom agents (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
+- [Create skills (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-skills)
+
 **Duration:** 2 hours  
 **Format:** Hands-on coding with your own fork
 

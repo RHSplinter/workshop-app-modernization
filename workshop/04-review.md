@@ -140,8 +140,8 @@ Pick a migration you've done (or need to do):
 ## Resources for Continuing
 
 ### GitHub Copilot Documentation
-- 📚 [Custom Agents Guide](https://docs.github.com/en/copilot)
-- 🛠️ [Skills Reference](https://docs.github.com/en/copilot)
+- 📚 [Custom Agents Guide](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
+- 🛠️ [Skills Reference](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-skills)
 - 🎯 [Best Practices](https://docs.github.com/en/copilot)
 
 ### Community & Learning

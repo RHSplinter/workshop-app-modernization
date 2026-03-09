@@ -29,6 +29,7 @@ This is a template workshop for GitHub Copilot Dev Days. Please follow these gui
 ## Repository Structure
 
 - `docs/`: Published HTML site (landing page + step viewer)
+- `src/`: Source code for the application used during the workshop
 - `workshop/`: Source markdown lessons (numbered `00-`, `01-`, etc.)
 - `.github/workflows/deploy.yml`: GitHub Pages deployment workflow
 - `.github/copilot-instructions.md`: This file — Copilot context config

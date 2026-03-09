@@ -1,293 +1,188 @@
 # Exercise 3: Execute the Migration
 
-**Duration:** 35 minutes
-
-Now it's time to put your custom agents to work! Using the security audit and migration plan you created, you'll modernize the Product Cat API from .NET Framework 4.8 to .NET 10.
+Now it's time to put your custom agents to work! You'll execute the migration plan you created in Exercise 2, using your agents to guide each step.
 
 ## Objectives
 
-- Use your custom agents to guide actual code changes
-- Execute a phased migration approach
+- Use your migration plan to guide the actual code changes
+- Execute each phase of the migration step-by-step with your agent
 - Fix security vulnerabilities during modernization
-- Validate that the modernized app works
-
-## Migration Approach
-
-We'll use an **incremental strategy**:
-1. **Update project structure** - Convert to SDK-style project
-2. **Modernize dependencies** - Update packages
-3. **Fix code patterns** - Update controllers, services, data access
-4. **Update configuration** - Move to appsettings.json
-5. **Validate & test** - Ensure everything works
+- Validate that the modernized application works correctly
 
 > [!NOTE]
-> Your agents will maintain context across all these steps. They "remember" what you've changed and suggest consistent patterns.
+> You have a migration plan (`migration-plan.md`) created in Exercise 2. In this exercise, you'll ask your modernization agent to execute it phase-by-phase.
+> Your agents maintain context across all these steps. They "remember" what you've changed and ensure consistent patterns throughout.
+> In VS Code, choose agents from the chat dropdown. Switch between agents as needed for each prompt.
 
-## Part 1: Project Structure Modernization (10 minutes)
+## Executing Your Migration Plan
 
-### Step 1: Convert Project File
+You created a comprehensive migration plan in Exercise 2. Now you'll execute it step-by-step with your agent.
 
-Ask your modernization agent:
+### Key Principle: Execute Each Phase in Order
 
-```
-@modernization-expert
+Your migration plan likely breaks down the work into phases (project structure, dependencies, code patterns, configuration, testing). For each phase:
 
-Convert the ProductCatalogAPI.csproj from old-style to SDK-style project file.
-
-Current state: .NET Framework 4.8 with packages.config
-Target: .NET 10 SDK-style with PackageReference
-
-Generate the new .csproj file contents.
-```
-
-**Expected agent response should include:**
-```xml
-<Project Sdk="Microsoft.NET.Sdk.Web">
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.0.0" />
-  </ItemGroup>
-</Project>
-```
-
-Apply the changes to your project file.
-
-### Step 2: Create Program.cs
-
-Ask your agent:
-
-```
-@modernization-expert
-
-Create a Program.cs file for .NET 10 that:
-1. Configures services (DbContext, DI)
-2. Sets up middleware (auth, HTTPS, CORS)
-3. Configures Swagger/OpenAPI
-4. Loads configuration from appsettings.json
-
-Use the minimal hosting model.
-```
-
-Create the new `Program.cs` file with the agent's response.
-
-### Step 3: Remove Legacy Files
-
-Delete files that are no longer needed:
-- `Web.config` (will become `appsettings.json`)
-- `Global.asax`
-- `App_Start/WebApiConfig.cs`
-- `packages.config`
+1. **Open your migration plan**: Review `migration-plan.md` to see what the next phase is
+2. **Share relevant portion with agent**: Open Copilot Chat and select your modernization agent
+3. **Ask the agent to execute the phase**: Provide the context and phase description from your plan
+4. **Apply the generated changes**: Make the code updates based on the agent's guidance
+5. **Move to next phase**: Repeat for each phase in your plan
 
 > [!TIP]
-> Don't delete until you've migrated the configuration values!
+> **Working Through Phases**: For each phase in your migration plan, tell the agent something like:
+> - "Here's Phase 2 from my migration plan: [paste relevant section]"
+> - "Walk me through how to execute this phase step-by-step"
+> - "Generate the code changes needed for this phase"
+> - "After you provide the changes, I'll apply them and then ask you about the next phase"
+>
+> This keeps the agent focused on one phase at a time while maintaining context about your overall migration strategy.
 
-## Part 2: Code Modernization (15 minutes)
+## Part 1: Starting the Migration
 
-### Step 4: Modernize Controllers
+### Step 1: Review Your Migration Plan
 
-Work with both agents together!
+Open `migration-plan.md` that you created in Exercise 2. Note:
+- What are the phases outlined?
+- What's the recommended order?
+- What are the key dependencies?
+- What files need to change in each phase?
 
-```
-@modernization-expert @security-modernization
+### Step 2: Execute Phase 1 - Project Structure
 
-Modernize the ProductsController:
-
-Modernization requirements:
-- Change base class to ControllerBase
-- Update return types to IActionResult
-- Make all methods async
-- Update routing attributes
-- Implement proper DI
-
-Security requirements:
-- Fix the SQL injection vulnerability in Search()
-- Add [Authorize] attributes
-- Add input validation
-- Use parameterized queries via EF Core
-
-Provide the complete modernized controller.
-```
-
-**The agents working together should:**
-- Modernization agent: Handles framework patterns
-- Security agent: Ensures secure coding practices
-- Both: Consistent with previous recommendations
-
-### Step 5: Update Data Access Layer
-
-Ask your modernization agent:
-
-```
-@modernization-expert
-
-Migrate the Entity Framework 6 DbContext to EF Core 9:
-
-1. Update the DbContext class
-2. Make all methods async
-3. Update connection string handling
-4. Add proper configuration
-
-Show before/after for the ProductContext class.
-```
-
-Apply the changes.
-
-### Step 6: Update Models & DTOs
-
-Your agent can help with model updates:
-
-```
-@modernization-expert
-
-Review all model classes and update them for .NET 10 best practices:
-- Enable nullable reference types
-- Add data annotations for validation
-- Update any .NET Framework-specific attributes
-```
-
-## Part 3: Configuration Migration (5 minutes)
-
-### Step 7: Create appsettings.json
-
-Extract configuration from Web.config:
-
-```
-@modernization-expert
-
-Extract all configuration from Web.config and create:
-1. appsettings.json (base config)
-2. appsettings.Development.json (dev-specific)
-
-Include:
-- Connection strings
-- Logging configuration
-- CORS settings
-- JWT auth settings
-```
-
-Create the appsettings files with the agent's generated content.
+1. Open Copilot Chat (`Ctrl+I`)
+2. Select your **modernization agent** from the dropdown
+3. Add the migration plan to the context (select the file in the chat window or reference the name with #)
+4. Ask the agent to execute the plan **step-by-step**. Using a step-by-step approach ensures that:
+    - The agent only works on small parts at a time.
+    - You can review the work between steps and adjust accordingly.
+4. As the agent works through each phase, review the changes. Make changes when necessary or ask questions to the agent if unclear.
 
 > [!WARNING]
-> Don't commit actual connection strings! Use environment variables or Azure Key Vault for production.
+> Don't commit actual passwords or API keys! Your security agent should remind you about this. Use:
+> - User Secrets for local development
+> - Azure Key Vault or environment variables for production
 
-### Step 8: Update Authentication
+## Part 2: Testing & Validation
 
-If your app has authentication:
+Once you've completed all phases of the migration plan, it's time to validate that everything works correctly.
 
-```
-@security-modernization
+### Step 1: Build and Test the Application
 
-Implement JWT Bearer authentication in Program.cs that:
-1. Validates JWT tokens
-2. Reads configuration from appsettings.json
-3. Uses modern authentication middleware
-4. Follows security best practices
-```
+1. Run the build:
+   ```bash
+   dotnet restore
+   dotnet build
+   ```
 
-## Part 4: Testing & Validation (5 minutes)
+2. **If you encounter build errors:**
+   - Paste the error message to your modernization agent
+   - Ask what the cause is and how to fix it
+   - Your agents can help troubleshoot common issues like missing package references, namespace conflicts, or API compatibility problems
 
-### Step 9: Build the Application
+3. Run the application:
+   ```bash
+   dotnet run --project src/PartsCatalogAPI
+   ```
+   - The API should start on `https://localhost:5001` (or as configured)
+   - Watch the console output for any startup errors
 
-```bash
-dotnet build
-```
+### Step 2: Validate All Endpoints
 
-If you get errors, ask your agent:
+1. Navigate to: `https://localhost:5001/swagger`
 
-```
-@modernization-expert
+2. Test each endpoint to ensure they work:
+   - **GET** `/api/products` - Should return all products
+   - **GET** `/api/products/{id}` - Should return single product
+   - **GET** `/api/products/Search?name=brake` - **Critically**: Should work WITHOUT SQL injection!
+   - **POST** `/api/products` - Should create a product
+   - **PUT** `/api/products/{id}` - Should update a product
+   - **DELETE** `/api/products/{id}` - Should delete a product
+   - Repeat for Categories endpoints
 
-I'm getting this build error:
-[paste error]
+> [!NOTE]
+> If you added authentication in your migration plan, you'll need a valid JWT token to test protected endpoints.
 
-What's the cause and how do I fix it?
-```
+### Step 3: Verify Security Fixes
 
-### Step 10: Run the Application
+1. **SQL Injection Test**: Try `GET /api/products/Search?name='; DROP TABLE Products; --`
+   - ✅ **Expected**: Should return empty results or error, **NOT** execute SQL
+   - ❌ **Old behavior**: Would have executed the malicious SQL
 
-```bash
-dotnet run
-```
+2. **Authentication Test** (if configured): Try calling POST/PUT/DELETE without a token
+   - ✅ **Expected**: 401 Unauthorized
+   - ❌ **Old behavior**: Would have allowed the operation
 
-The API should start on `https://localhost:5001`
+### Step 4: Generate Final Security Report
 
-### Step 11: Test Endpoints
+1. Switch to your **security agent** in the Copilot Chat dropdown
 
-Navigate to `https://localhost:5001/swagger`
+2. Ask it to perform a final security audit of the modernized PartsCatalogAPI, requesting:
+   - A comparison to the original audit in `security-audit.md`
+   - Which vulnerabilities were fixed during the migration
+   - What security improvements were made
+   - Any remaining concerns or recommendations
+   - A before vs after security score
+   - A comparison report suitable for your team
 
-Test:
-- GET /api/products - Should return product list
-- GET /api/products/{id} - Should return single product
-- POST /api/products - Should create product (requires auth)
-- PUT /api/products/{id} - Should update product (requires auth)
-- DELETE /api/products/{id} - Should delete product (requires auth)
+3. Save the response as `security-audit-after-migration.md`
 
-### Step 12: Re-run Security Audit
+**Expected improvements:**
+- ✅ SQL injection vulnerabilities eliminated (EF Core parameterization)
+- ✅ Async patterns implemented (better scalability)
+- ✅ HTTPS redirection enabled
+- ✅ Modern authentication configured
+- ✅ Packages updated (no more CVEs from 2016!)
+- ✅ Configuration secrets externalized
 
-Compare before and after:
+## Part 3: Modern Enhancements (Optional - if time permits)
 
-```
-@security-modernization
+Your migration plan is complete! If you have additional time, consider these optional modernizations with your agent.
 
-Perform a new security audit of the modernized application.
+### Step 1: Add Health Checks
 
-Compare findings to the original audit in docs/security-audit.md.
+Ask your modernization agent how to add health check endpoints for monitoring, including:
+   - Basic liveness check at /health
+   - Database connectivity check
+   - Configuration in Program.cs
+   - Response formatting options
 
-Generate a report showing:
-1. Issues resolved
-2. Improvements made
-3. Any remaining concerns
-4. Security score before/after
+Health checks are critical for containerized deployments and production monitoring.
 
-Save as docs/security-audit-after-migration.md
-```
+### Step 2: Add Structured Logging
 
-Review the improvements!
+Ask your agent to configure structured logging, requesting:
+   - Console logging in structured format
+   - Correlation IDs for request tracking
+   - Different log levels for Development vs Production
+   - Required packages and Program.cs updates
 
-## Part 5: Modern Enhancements (Optional, if time permits)
+Structured logging improves observability in production environments.
 
-### Step 13: Add Health Checks
+### Step 3: Consider Additional Modernizations
 
-```
-@modernization-expert
+Ask your agent what other modern .NET 10 features could enhance this API, such as:
+   - Response caching strategies
+   - Rate limiting middleware
+   - OpenTelemetry for distributed tracing
+   - Minimal APIs as an alternative to controllers
+   - Native AOT compilation
 
-Add health check endpoints:
-1. Basic health check at /health
-2. Database connectivity check
-3. Configure in Program.cs
-```
-
-### Step 14: Add Structured Logging
-
-```
-@modernization-expert
-
-Configure Serilog for structured logging:
-1. Log to console and file
-2. Include request/response logging
-3. Add correlation IDs
-```
+Evaluate which features make sense for your production use case.
 
 ## Success Criteria
 
-- [ ] Project converted to SDK-style targeting .NET 10
+- [ ] Reviewed migration plan from Exercise 2
+- [ ] Executed migration plan with agent guidance
 - [ ] All controllers modernized (async, ControllerBase, IActionResult)
 - [ ] EF6 migrated to EF Core 9
-- [ ] Configuration moved to appsettings.json
-- [ ] Security vulnerabilities fixed
-- [ ] Application builds successfully
+- [ ] Configuration moved from Web.config to appsettings.json
+- [ ] SQL injection vulnerabilities fixed and verified
+- [ ] Application builds without errors
 - [ ] Application runs and serves requests
-- [ ] Swagger/OpenAPI documentation works
-- [ ] All tests pass (if you have tests)
-- [ ] Security audit shows improvement
+- [ ] Swagger/OpenAPI documentation accessible
+- [ ] All endpoints tested and working
+- [ ] Security audit shows significant improvement
+- [ ] Final security report generated
 
 ## Troubleshooting
 
@@ -295,61 +190,73 @@ Configure Serilog for structured logging:
 ```bash
 dotnet restore
 ```
+If issues persist, check package versions and compatibility.
 
 **Runtime errors about configuration?**
-- Check appsettings.json syntax
-- Verify connection string format
-- Ensure IConfiguration is injected properly
+- Verify appsettings.json syntax (valid JSON)
+- Check connection string format for EF Core
+- Ensure `IConfiguration` is registered and injected properly
+- Confirm configuration file is set to "Copy to Output Directory"
 
-**Database errors?**
-- Update connection string to EF Core format
-- Run migrations: `dotnet ef database update`
-- Check SQL Server is running
+**Database connection errors?**
+- Update connection string to match your SQL Server instance
+- For EF Core, connection string format may differ slightly from EF6
+- Ensure SQL Server is running and accessible
+- Consider running: `dotnet ef database update` to ensure schema is current
+
+**Controller routing issues?**
+- Verify `app.MapControllers()` is in Program.cs
+- Check controller routing attributes match ASP.NET Core syntax
+- Ensure controllers inherit from `ControllerBase` and have `[ApiController]`
 
 **Authentication not working?**
 - Verify JWT configuration in appsettings.json
-- Check middleware order (UseAuthentication before UseAuthorization)
-- Test with valid JWT token
+- Check middleware order: `UseAuthentication()` BEFORE `UseAuthorization()`
+- Test with a valid JWT token using tools like Postman
+- Check that `AddAuthentication` and `AddJwtBearer` are configured
 
-## Commit Your Work
+**Swagger not appearing?**
+- Ensure Swashbuckle.AspNetCore package is referenced
+- Check that `builder.Services.AddSwaggerGen()` is called
+- Verify `app.UseSwagger()` and `app.UseSwaggerUI()` are in pipeline
+- Only enable in Development: `if (app.Environment.IsDevelopment())`
 
-```bash
-git add .
-git commit -m "Migrate ProductCatalogAPI from .NET Framework 4.8 to .NET 10
-
-- Converted to SDK-style project
-- Modernized controllers with async/await
-- Migrated EF6 to EF Core 9
-- Fixed security vulnerabilities
-- Added modern authentication
-- Configured health checks and logging"
-
-git push origin main
-```
-
-## Compare: With vs Without Custom Agents
+## Reflection: Impact of Custom Agents
 
 ### Without Custom Agents
-- ⏱️ **Time**: 3-5 days of research and trial/error
-- 🔍 **Context Loss**: Forget what you changed, repeat searches
-- ❌ **Inconsistent Patterns**: Different approaches in different files
-- 🐛 **Missed Issues**: Security vulnerabilities slip through
-- 📚 **Constant Research**: Reading docs for every decision
+- ⏱️ **Time**: 2-3 days of research, trial/error, documentation reading
+- 🔍 **Context Loss**: Constantly losing track of what you changed
+- ❌ **Inconsistency**: Different patterns across files
+- 🐛 **Missed Issues**: Security vulnerabilities overlooked
+- 📚 **Cognitive Load**: Juggling framework differences, security, best practices
+- 🔄 **Repetition**: Explaining context to generic AI repeatedly
 
 ### With Custom Agents
-- ⏱️ **Time**: 2-3 hours of guided migration
-- 🧠 **Context Retained**: Agent remembers all changes
-- ✅ **Consistent Patterns**: Same approach throughout
-- 🛡️ **Security Validated**: Security agent catches issues
-- 🎯 **Focused Work**: Agent handles research, you handle decisions
+- ⏱️ **Time**: 2-3 hours of guided, systematic migration
+- 🧠 **Context Retained**: Agents remember all changes and maintain consistency
+- ✅ **Consistency**: Same patterns applied throughout the codebase
+- 🛡️ **Security Validated**: Security agent catches vulnerabilities proactively
+- 🎯 **Focused Work**: Agents handle research and pattern matching
+- 🤝 **Collaboration**: Multiple specialized agents working together
 
 ## Reflection Questions
 
-1. How many times did your agents reference previous context?
-2. What would have taken longest without agent guidance?
-3. What migration patterns would you add to your skill?
-4. How would you use these agents on your real projects?
+1. How many times did your agents reference earlier context or maintain consistency?
+2. What part of the migration would have taken the longest without agent guidance?
+3. How did having both modernization and security agents improve the outcome?
+4. What additional patterns or knowledge would you add to your skill for future migrations?
+5. How would you apply this agent-assisted approach on your real-world projects?
+
+## What You've Learned
+
+- ✅ How to create and use custom agents with specific expertise
+- ✅ How to build reusable skills that agents can reference
+- ✅ How multiple agents can collaborate on complex tasks
+- ✅ How to migrate .NET Framework applications to modern .NET systematically
+- ✅ How to fix security vulnerabilities during modernization
+- ✅ How custom agents maintain context and ensure consistency
 
 ---
 
-**Congratulations! You've completed the migration!** Proceed to [Review & Next Steps](./04-review.md).
+**Congratulations! You've completed the migration!**  
+Proceed to [Review & Next Steps](./04-review.md).
