@@ -58,13 +58,6 @@ This workshop includes a real-world sample: a legacy Parts Catalog API with inte
 └── LICENSE
 ```
 
-## Customizing This Template
-
-1. Update all `TODO` comments in `docs/index.html` and `docs/step.html`
-2. Replace the placeholder workshop steps in `workshop/`
-3. Update `REPO_NAME` references to your actual repository name
-4. Add your application code alongside the workshop content
-
 ## Publishing
 
 The workshop site deploys automatically to GitHub Pages when you push to `main`. Enable GitHub Pages in your repository settings (Settings → Pages → Source: GitHub Actions).

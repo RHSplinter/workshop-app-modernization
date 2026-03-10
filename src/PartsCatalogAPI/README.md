@@ -2,6 +2,8 @@
 
 A legacy ASP.NET Web API application built on .NET Framework 4.8 for managing an auto parts catalog. This application is intentionally designed with security vulnerabilities and legacy patterns for use in the **App Modernization with GitHub Copilot** workshop.
 
+This project is based on the [Parts Unlimited](https://github.com/microsoft/PartsUnlimitedE2E/tree/master/PartsUnlimited-aspnet45) project by Microsoft; specifically updated for the purpose of this workshop.
+
 ## 🎯 Purpose
 
 This project serves as a hands-on learning tool for:
@@ -48,14 +50,8 @@ dotnet build
 
 ### 4. Run the Application
 
-Using Visual Studio:
-- Press F5 to run with debugging
-- The API will start at `http://localhost:5000/`
-
-Using Visual Studio Code:
-```bash
-dotnet run
-```
+1. Run `dotnet run`
+2. The API will start at `http://localhost:5000/`
 
 ### 5. Test the API
 
