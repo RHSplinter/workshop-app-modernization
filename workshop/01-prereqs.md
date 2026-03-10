@@ -1,36 +1,36 @@
 # Prerequisites and Setup
 
-Before starting this workshop, make sure you have the following set up. This should take about 10 minutes.
-
 ## Required Tools
 
-- [ ] **GitHub Account** with an active Copilot subscription (Copilot Free is sufficient)
-- [ ] **Git** installed and configured
-- [ ] **Visual Studio Code** with GitHub Copilot extension enabled
-- [ ] **.NET 10 SDK or later** installed on your machine
-- [ ] **SQL Server Express** or **SQL Server LocalDB** (comes with Visual Studio)
+- A **GitHub Account** with an active Copilot subscription. A Copilot Free plan is sufficient.
+- One of the following:
+    - Access to GitHub Codespaces. The codespace contains all required tools.
+    - A supported IDE, preferably [Visual Studio Code](https://code.visualstudio.com/).
+        - THe GitHub Copilot extension. Be sure to sign in to your GitHub account within the IDE.
+        - [C# Dev Kit Extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit) if using VS Code
+        - [.NET 10 SDK](https://dotnet.microsoft.com/download) to build the .NET application
+        - [**SQL Server Express** or **SQL Server LocalDB**](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (comes with Visual Studio)
 
 ## Environment Setup
 
 ### 1. Fork and Clone the Repository
 
-1. Fork this repository to your GitHub account (click **Fork** button at top right)
-2. Clone your fork locally:
-
-```bash
-git clone https://github.com/<YOUR-GITHUB-HANDLE>/workshop-app-modernization.git
-cd workshop-app-modernization
-```
+Fork this repository to your GitHub account (click **Fork** button at top right)
 
 ### 2. Open in Visual Studio Code or Codespaces
 
 Choose one option:
 
 **Option A: Local VS Code**
-
-```bash
-code .
-```
+1. Clone your fork locally:
+    ```bash
+    git clone https://github.com/{YOUR-GITHUB-HANDLE}/workshop-app-modernization.git
+    cd workshop-app-modernization
+    ```
+2. Open VS Code
+    ```bash
+    code .
+    ```
 
 **Option B: GitHub Codespaces**
 

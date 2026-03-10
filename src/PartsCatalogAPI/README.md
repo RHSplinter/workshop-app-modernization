@@ -126,24 +126,24 @@ This application contains **intentional security vulnerabilities** for education
 
 During the workshop, you will:
 
-1. **Exercise 1 (25 min)**: Create a custom Security Analysis Agent
+1. **Exercise 1 (20 min)**: Create a custom Security Analysis Agent
    - Define expertise in security vulnerability detection
    - Run analysis on this codebase
    - Generate a detailed security report
 
-2. **Exercise 2 (30 min)**: Build a .NET Framework Modernization Skill
+2. **Exercise 2 (25 min)**: Build a .NET Framework Migration Skill
    - Create reusable knowledge for .NET migrations
    - Package patterns, breaking changes, and best practices
    - Build an agent that leverages the skill
 
-3. **Exercise 3 (35 min)**: Execute the Migration
+3. **Exercise 3 (25 min)**: Execute the Migration
    - Convert project to .NET 10
    - Modernize code patterns (async/await, dependency injection)
    - Fix security vulnerabilities
    - Migrate Entity Framework 6 to EF Core 9
    - Update configuration from Web.config to appsettings.json
 
-4. **Exercise 4 (15 min)**: Review and Reflect
+4. **Exercise 4 (5 min)**: Review and Reflect
    - Compare results with and without custom agents
    - Discuss time savings and accuracy improvements
    - Explore real-world applications
