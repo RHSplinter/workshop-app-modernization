@@ -35,7 +35,7 @@ The `src/PartsCatalogAPI` folder contains a .NET Framework 4.8 Web API with:
 ### Step 2: Run a Generic Security Analysis
 
 1. Open GitHub Copilot Chat (`Ctrl+I` on Windows or `Cmd+I` on Mac)
-2. In agent mode, request a comprehensive security auditof the application.
+2. In agent mode, request a comprehensive security audit of the controllers.
 3. Observe the results:
     - How comprehensive is the analysis?
     - Does it check [Web.config](../src/PartsCatalogAPI/Web.config) for hardcoded credentials?
@@ -51,18 +51,20 @@ The `src/PartsCatalogAPI` folder contains a .NET Framework 4.8 Web API with:
 
 Now you'll create a specialized agent that knows how to scan .NET Framework applications for security vulnerabilities with migration context. GitHub Copilot supports [creating custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that can be tailored to your specific needs, with detailed [configuration options](https://docs.github.com/en/copilot/reference/custom-agents-configuration) available in the official documentation.
 
+> [!TIP]
+> The [Awesome Copilot Repository](https://github.com/github/awesome-copilot) is a community-driven toolkit for Copilot, which includes custom agents, skills and more!
+
 1. Create a new folder structure:
     ```
     .github/
     └── agents/
         └── security-expert.agent.md
     ```
-<!-- TODO: Improve -->
 2. Design your agent definition. Include guidance on:
     - Security vulnerability types to detect (SQL injection, auth issues, hardcoded secrets, package CVEs, input validation)
-    - Reporting expectations (severity levels, file paths/line numbers, remediation, migration timing)
-    - Analysis workflow (scan, prioritize, categorize, recommend, report)
-    - Quality rules (include CVE references when possible, explain why each issue matters, suggest modern .NET alternatives)
+    - Compliance requirements (OWASP, CVE)
+    - Reporting expectations (severity levels, remediation, migration timing)
+    - Quality rules (e.g.: include CVE references when possible, explain why each issue matters, suggest modern .NET alternatives)
 3. Save your agent definition
 
 ### Step 2: Verify and Test Your Agent
@@ -85,38 +87,32 @@ Now let's see how your custom agent performs on the same analysis:
 
 1. Open Copilot Chat (`Ctrl+I`)
 2. Use the agent dropdown to select your custom agent
-<!-- TODO: Improve -->
 3. Request a comprehensive security audit of the PartsCatalogAPI. Ask for:
     - Analysis of all controllers for injection vulnerabilities
     - Review of packages.config for known CVEs
     - Configuration files checked for exposed secrets and insecure settings
     - Evaluation of authentication and authorization implementation
-    - Assessment of data access patterns
     - A prioritized report with severity levels and remediation guidance
 4. **Compare the results** with your baseline scan from Part 1:  
-   **What improved?**
-    <!-- TODO: Improve -->
-    - Does the agent provide more specific line numbers?
+    **What improved?**
+    - Does the agent provide more specific context and remediation?
     - Is the SQL injection vulnerability in `SearchProducts()` explained better?
-    - Does it identify the hardcoded credentials in [Web.config](../src/PartsCatalogAPI/Web.config)?
     - Are findings categorized by severity?
     - Does it suggest modern .NET alternatives?
 
 ### Step 2: Deep Dive on Critical Issues
 
 Ask your agent to analyze the `SearchProducts()` and `GetCategoryByName()` methods. Request:
-<!-- TODO: Improve -->
 - An explanation of why these methods are vulnerable to SQL injection
 - The potential impact of these vulnerabilities
-- How to fix them during migration to .NET 10 (including code examples using EF Core)
+- How to fix them during migration to .NET 10 (including code examples)
 - Before/after code comparisons
 
 ### Step 3: Generate Migration-Ready Security Report
 
-<!-- TODO: Improve -->
 1. Ask your agent to create a structured security report that includes:
     - An executive summary with vulnerability counts organized by severity
-    - Critical findings with specific file paths and line numbers referenced
+    - Critical findings with specific file paths referenced
     - Code snippets showing the vulnerable patterns
     - A remediation roadmap indicating what to fix before, during, and after migration
     - Package upgrade recommendations with specific version numbers
@@ -141,42 +137,6 @@ Ask your agent to analyze the `SearchProducts()` and `GetCategoryByName()` metho
 - ✅ Actionable remediation with code examples
 - ✅ Understanding of legacy patterns vs modern alternatives
 
-## Common Findings You Should See
-
-Your agent should identify issues like these in the PartsCatalogAPI:
-
-1. **Critical: SQL Injection**
-    - **Location**: [ProductsController.cs](../src/PartsCatalogAPI/Controllers/ProductsController.cs) `SearchProducts()` method (line ~43)
-    - **Issue**: String concatenation: `"SELECT * FROM Products WHERE Name LIKE '%" + name + "%'"`
-    - **Impact**: Attacker can execute arbitrary SQL queries
-
-2. **Critical: SQL Injection**
-    - **Location**: [CategoriesController.cs](../src/PartsCatalogAPI/Controllers/CategoriesController.cs) `GetCategoryByName()` method (line ~43)
-    - **Issue**: String concatenation: `"SELECT * FROM Categories WHERE Name = '" + name + "'"`
-
-3. **Critical: Missing Authentication**
-    - **Location**: Both controllers
-    - **Issue**: No `[Authorize]` attributes on controllers or actions
-    - **Impact**: Unauthenticated users can modify data
-
-4. **High: Hardcoded Credentials**
-    - **Location**: [Web.config](../src/PartsCatalogAPI/Web.config)
-    - **Issue**: Admin credentials and API keys in clear text
-    - **Secrets**: AdminUsername, AdminPassword, ApiKey
-
-5. **High: Outdated Packages with CVEs**
-    - **Location**: [packages.config](../src/PartsCatalogAPI/packages.config)
-    - **Issue**: Newtonsoft.Json 9.0.1 (2016) - multiple known CVEs
-    - **Issue**: Entity Framework 6.1.3 (2015) - outdated
-
-6. **Medium: No HTTPS Enforcement**
-    - **Location**: [Web.config](../src/PartsCatalogAPI/Web.config)
-    - **Issue**: API accepts HTTP requests without redirect
-
-7. **Medium: Synchronous Database Operations**
-    - **Location**: All controller methods
-    - **Issue**: Using `Find()`, `ToList()` instead of async patterns
-
 ## Success Criteria
 
 - [ ] Completed baseline security scan with generic agent
@@ -184,7 +144,6 @@ Your agent should identify issues like these in the PartsCatalogAPI:
 - [ ] Agent is recognized in Copilot Chat (appears in the agent dropdown)
 - [ ] Ran comparative analysis showing improved results
 - [ ] Generated structured security report
-- [ ] You can explain the difference custom agents make
 
 ## Troubleshooting
 

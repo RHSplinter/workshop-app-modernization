@@ -22,42 +22,52 @@ You'll create a skill that documents everything needed to migrate .NET Framework
         └── dotnet-framework-migration/
             └── SKILL.md
     ```
-<!-- TODO: Improve -->
-2. Design your skill in the `SKILL.md` file. Include documentation on:
-    - Framework and API differences (System.Web → Microsoft.AspNetCore)
-    - Project structure conversion (packages.config → PackageReference style projects)
-    - Configuration migration strategies (Web.config → appsettings.json)
-    - Startup pipeline changes (Global.asax/WebApiConfig → Program.cs)
-    - Data access layer modernization (EF6 → EF Core)
-    - Known breaking changes in controllers, routing, return types, ASP.NET Core DI, and auth
-    - Phase-by-phase migration strategy
-    - Package mapping reference (what replaces old packages)
-    - Common pitfalls and how to avoid them
+
+2. Design your skill in the `SKILL.md` file to document key migration knowledge. Consider including the following documentation:
+    - **Core Framework Changes**:
+        - Web API base classes: `ApiController` → `ControllerBase`
+        - Return types: `IHttpActionResult` → `ActionResult<T>`
+        - Project files: Full `.csproj` → SDK-style
+        - Configuration: `Web.config` → `appsettings.json`
+        - Startup: `Global.asax` + `WebApiConfig` → `Program.cs`
+        - Entity Framework: EF6 → EF Core (especially async patterns)
+
+        **Example: Document a Controller Migration**
+        ```csharp
+        // .NET Framework 4.8
+        public class ProductsController : ApiController
+        {
+            public IHttpActionResult GetProducts() 
+                => Ok(db.Products.ToList());
+        }
+        
+        // .NET 10
+        public class ProductsController : ControllerBase
+        {
+            private readonly PartsCatalogContext _context;
+            public ProductsController(PartsCatalogContext context) => _context = context;
+            
+            [HttpGet]
+            public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+                => await _context.Products.ToListAsync();
+        }
+        // Note: Constructor injection, async/await, ActionResult<T>
+        ```
+
+    - **Critical Breaking Changes** - The gotchas that cause runtime issues:
+        - Middleware order matters: `UseAuthentication()` must come before `UseAuthorization()`
+        - Connection strings move from `ConfigurationManager` to `IConfiguration`
+        - Async is required (can't mix sync database calls)
+        - Model binding needs explicit attributes like `[FromBody]`
+        - Package replacements (e.g., `EntityFramework` → `Microsoft.EntityFrameworkCore.SqlServer`)
 
 > [!TIP]
-> You can add link to the skill file and the agent will check them out when necessary. Useful links for ASP.NET migration:
-> - [ASP.NET Core Migration Guide](https://learn.microsoft.com/en-us/aspnet/core/migration/)
-> - [Breaking Changes Documentation](https://learn.microsoft.com/en-us/dotnet/core/compatibility/)
-
-Consider documenting a phase-by-phase migration strategy:
-1. **Phase 1**: Project file conversion (SDK-style, target framework)
-2. **Phase 2**: Dependencies (package updates, remove System.Web)
-3. **Phase 3**: Code patterns (controllers, async/await, DI)
-4. **Phase 4**: Configuration (appsettings.json, middleware)
-5. **Phase 5**: Testing & validation
-
-Also consider to include common pitfalls:
-- Forgetting async/await patterns
-- Connection string location changes
-- Middleware ordering (CRITICAL: UseAuthentication before UseAuthorization)
-- Model binding differences (FromBody explicit in .NET Core)
-- Nullable reference types considerations
+> Use tables, code snippets, or any format that works for your team! The examples above are starting points - experiment with what best captures your migration knowledge. You can link to [official migration docs](https://learn.microsoft.com/en-us/aspnet/core/migration/) for deep dives.
 
 > [!NOTE]
-> The skill should be comprehensive - it's your team's migration reference. But don't make it a full tutorial; focus on the patterns and decisions specific to .NET Framework → .NET 10.
+> Keep it focused on patterns and decisions specific to your migration. Add phase-by-phase strategies, package mappings, or architectural notes as needed for your project.
 
 3. Save your skill definition
-
 
 ## Part 2: Create the Modernization Agent
 
@@ -86,30 +96,27 @@ Agent should:
 5. Suggest validation steps
 ```
 
-<!-- TODO: Validate if true -->
-> [!TIP]
-> Your agent can reference the security agent too. Consider adding a principle: "Consult the security agent for vulnerability fixes during migration."
-
 ### Step 3: Test Your Agent and Skill Together
 
 Let's verify your agent can guide the PartsCatalogAPI migration:
 
 1. Open Copilot Chat (`Ctrl+I`)
 2. Use the agent dropdown to select your modernization agent
-<!-- TODO: Improve -->
-3. Ask the agent to analyze the ProductsController and provide a migration plan. Include details about:
-    - The current code structure (inherits from ApiController, returns IHttpActionResult, uses sync database calls)
-    - What needs to change and why
-    - A modernized version using .NET 10 patterns
-    - Dependencies that need updating
-    - How to validate the changes work
-<!-- TODO: Validate if true -->
+3. Ask the agent to analyze `ProductsController.cs` and provide migration guidance. Consider asking about:
+    - What .NET Framework patterns exist in the current code
+    - How to modernize the controller for .NET 10
+    - What breaking changes need to be addressed
+    - Which packages or dependencies need updates
+    - How to validate the modernized code works correctly
 4. **Evaluate the response:**
     - Does the agent reference the migration skill?
     - Does it provide specific code examples?
     - Does it explain breaking changes clearly?
     - Does it mention async/await requirements?
     - Does it note EF Core migration needs?
+
+> [!TIP]
+> Your agent can reference the security agent too. Consider adding a principle: "Consult the security agent for vulnerability fixes during migration."
 
 ### Step 4: Compare Agent Approaches
 
