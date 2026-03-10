@@ -20,7 +20,7 @@ Or visit the [published workshop site](https://YOUR-USERNAME.github.io/workshop-
 - ✅ Migrate .NET Framework 4.8 applications to .NET 10
 - ✅ Modernize Entity Framework 6 to EF Core 9
 - ✅ Implement async/await patterns and dependency injection
-- ✅ Compare the effectiveness of custom agents vs. generic Copilot
+- ✅ Compare the effectiveness of custom agents vs. generic Copilot agent mode
 
 ## 🧪 Sample Application
 

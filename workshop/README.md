@@ -6,11 +6,7 @@ Welcome to this hands-on workshop! Transform complex modernization projects into
 
 Learn to build custom GitHub Copilot agents and skills that transform risky modernization projects from weeks into hours. You'll create security-aware agents that audit your codebase, identify vulnerabilities, and execute framework upgrades while maintaining context across hundreds of files.
 
-Official references:
-- [Create custom agents (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
-- [Create skills (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-skills)
-
-**Duration:** 2 hours  
+**Duration:** 1.5 hours  
 **Format:** Hands-on coding with your own fork
 
 ### What You'll Build
@@ -18,10 +14,21 @@ Official references:
 In this workshop, you'll modernize a legacy .NET Framework 4.8 Web API application to .NET 10 by:
 
 1. Creating a **Security Agent** that identifies vulnerabilities and compliance issues
-2. Building a **Modernization Skill** that encodes migration best practices
+2. Building a **Migration Skill** that encodes migration best practices
 3. Using these tools to **execute a complete framework upgrade** with confidence
 
-### Learning Objectives
+## Workshop Exercises
+
+<!-- TODO: Validate duration -->
+| Step | Exercise | Duration | Topic | Description |
+|------|----------|----------|-------|-------------|
+| 00 | [Prerequisites][ex0] | 10 min | Setup | Fork the repo and verify environment |
+| 01 | [Security Agent][ex1] | 25 min | Security Analysis | Create a security agent and audit the legacy app |
+| 02 | [Modernization Skill & Agent][ex2] | 30 min | Migration Strategy | Build reusable modernization expertise |
+| 03 | [Execute Migration][ex3] | 35 min | Hands-on Migration | Modernize the application to .NET 10 |
+| 04 | [Review][ex4] | 15 min | Summary | Review results and discuss real-world applications |
+
+## Learning Objectives
 
 By the end of this workshop, you will be able to:
 
@@ -32,42 +39,13 @@ By the end of this workshop, you will be able to:
 
 ## Why Custom Agents for Modernization?
 
-Generic Copilot is great for code completion, but complex modernization requires:
+Generic Copilot agents great for code completion, but complex modernization requires:
 
 - **Context Retention** - Agents remember your full migration strategy across hundreds of files
 - **Domain Expertise** - Skills encode security standards and patterns that generic LLMs might miss
 - **Consistency** - Same patterns applied across entire codebase
 - **Teachability** - Skills improve as you refine them, like training a team member
 - **Auditability** - Clear reasoning for each suggested change
-
-## Prerequisites
-
-Before attending this workshop, please ensure you have:
-
-- [ ] A GitHub account with an active **Copilot Pro, Pro+, Business, or Enterprise** subscription
-- [ ] **.NET 8 SDK or later** installed (we'll target .NET 10)
-- [ ] **Visual Studio Code** with the GitHub Copilot extension enabled
-- [ ] **Git** installed and configured
-- [ ] Basic familiarity with C# and ASP.NET
-
-> [!NOTE]
-> If you are using Copilot Business or Copilot Enterprise, ensure your admin has enabled custom agents and skills features.
-
-## Workshop Exercises
-
-| Exercise | Duration | Topic | Description |
-|----------|----------|-------|-------------|
-| [0. Prerequisites][ex0] | 10 min | Setup | Fork the repo and verify environment |
-| [1. Security Agent][ex1] | 25 min | Security Analysis | Create a security agent and audit the legacy app |
-| [2. Modernization Skill & Agent][ex2] | 30 min | Migration Strategy | Build reusable modernization expertise |
-| [3. Execute Migration][ex3] | 35 min | Hands-on Migration | Modernize the application to .NET 10 |
-| [4. Review][ex4] | 15 min | Summary | Review results and discuss real-world applications |
-
-[ex0]: ./00-prereqs.md
-[ex1]: ./01-security-agent.md
-[ex2]: ./02-modernization-skill.md
-[ex3]: ./03-execute-migration.md
-[ex4]: ./04-review.md
 
 ## The Sample Application
 
@@ -97,6 +75,7 @@ You'll work with a **Product Catalog API** - a realistic .NET Framework 4.8 Web 
 *Happy coding with GitHub Copilot! 🚀*
 
 [ex0]: ./00-prereqs.md
-[ex1]: ./01-first-exercise.md
-[ex2]: ./02-second-exercise.md
-[ex3]: ./03-review.md
+[ex1]: ./01-security-agent.md
+[ex2]: ./02-migration-skill.md
+[ex3]: ./03-execute-migration.md
+[ex4]: ./04-review.md

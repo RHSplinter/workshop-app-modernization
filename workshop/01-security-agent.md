@@ -4,7 +4,7 @@ In this exercise, you'll discover the power of custom agents by comparing generi
 
 ## Why a Security Agent?
 
-Generic Copilot doesn't know:
+Generic Copilot agents doesn't know:
 - **Your organization's security standards** (OWASP compliance, specific CVE thresholds)
 - **Your framework-specific risks** (Framework vulnerabilities, legacy authentication patterns)
 - **Your security priorities** (what must be fixed before migration vs what can wait)
@@ -35,7 +35,7 @@ The `src/PartsCatalogAPI` folder contains a .NET Framework 4.8 Web API with:
 ### Step 2: Run a Generic Security Analysis
 
 1. Open GitHub Copilot Chat (`Ctrl+I` on Windows or `Cmd+I` on Mac)
-2. Ask generic Copilot to scan the PartsCatalogAPI application. Request a comprehensive security audit.
+2. In agent mode, request a comprehensive security auditof the application.
 3. Observe the results:
     - How comprehensive is the analysis?
     - Does it check [Web.config](../src/PartsCatalogAPI/Web.config) for hardcoded credentials?
@@ -49,11 +49,7 @@ The `src/PartsCatalogAPI` folder contains a .NET Framework 4.8 Web API with:
 
 ### Step 1: Design Your Security Agent
 
-Now you'll create a specialized agent that knows how to scan .NET Framework applications for security vulnerabilities with migration context.
-
-> Reference: [Create custom agents (GitHub Docs)](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents)
-
-> Reference: [Custom Agent Configuration (GitHub Docs)](https://docs.github.com/en/copilot/reference/custom-agents-configuration)
+Now you'll create a specialized agent that knows how to scan .NET Framework applications for security vulnerabilities with migration context. GitHub Copilot supports [creating custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that can be tailored to your specific needs, with detailed [configuration options](https://docs.github.com/en/copilot/reference/custom-agents-configuration) available in the official documentation.
 
 1. Create a new folder structure:
     ```
@@ -68,9 +64,6 @@ Now you'll create a specialized agent that knows how to scan .NET Framework appl
     - Analysis workflow (scan, prioritize, categorize, recommend, report)
     - Quality rules (include CVE references when possible, explain why each issue matters, suggest modern .NET alternatives)
 3. Save your agent definition
-
-> [!TIP]
-> Look at the actual vulnerabilities in [ProductsController.cs](../src/PartsCatalogAPI/Controllers/ProductsController.cs) (SQL injection on lines 38-48) and [Web.config](../src/PartsCatalogAPI/Web.config) (hardcoded credentials) to inform your agent's focus areas.
 
 ### Step 2: Verify and Test Your Agent
 
@@ -94,20 +87,20 @@ Now let's see how your custom agent performs on the same analysis:
 2. Use the agent dropdown to select your custom agent
 <!-- TODO: Improve -->
 3. Request a comprehensive security audit of the PartsCatalogAPI. Ask for:
-   - Analysis of all controllers for injection vulnerabilities
-   - Review of packages.config for known CVEs
-   - Configuration files checked for exposed secrets and insecure settings
-   - Evaluation of authentication and authorization implementation
-   - Assessment of data access patterns
-   - A prioritized report with severity levels and remediation guidance
+    - Analysis of all controllers for injection vulnerabilities
+    - Review of packages.config for known CVEs
+    - Configuration files checked for exposed secrets and insecure settings
+    - Evaluation of authentication and authorization implementation
+    - Assessment of data access patterns
+    - A prioritized report with severity levels and remediation guidance
 4. **Compare the results** with your baseline scan from Part 1:  
    **What improved?**
-   <!-- TODO: Improve -->
-   - Does the agent provide more specific line numbers?
-   - Is the SQL injection vulnerability in `SearchProducts()` explained better?
-   - Does it identify the hardcoded credentials in [Web.config](../src/PartsCatalogAPI/Web.config)?
-   - Are findings categorized by severity?
-   - Does it suggest modern .NET alternatives?
+    <!-- TODO: Improve -->
+    - Does the agent provide more specific line numbers?
+    - Is the SQL injection vulnerability in `SearchProducts()` explained better?
+    - Does it identify the hardcoded credentials in [Web.config](../src/PartsCatalogAPI/Web.config)?
+    - Are findings categorized by severity?
+    - Does it suggest modern .NET alternatives?
 
 ### Step 2: Deep Dive on Critical Issues
 
@@ -132,6 +125,7 @@ Ask your agent to analyze the `SearchProducts()` and `GetCategoryByName()` metho
 ## Reflection: What's Different?
 
 ### Without Custom Agent (Baseline)
+
 - ❌ Generic advice about "updating packages"
 - ❌ Missing context about .NET Framework 4.8 specific issues
 - ❌ No migration-aware prioritization
@@ -139,6 +133,7 @@ Ask your agent to analyze the `SearchProducts()` and `GetCategoryByName()` metho
 - ❌ May miss framework-specific vulnerabilities
 
 ### With Custom Agent
+
 - ✅ Targeted .NET Framework security analysis
 - ✅ Specific CVE identification with package versions
 - ✅ Migration-context prioritization (fix before/during/after)
@@ -151,36 +146,36 @@ Ask your agent to analyze the `SearchProducts()` and `GetCategoryByName()` metho
 Your agent should identify issues like these in the PartsCatalogAPI:
 
 1. **Critical: SQL Injection**
-   - **Location**: [ProductsController.cs](../src/PartsCatalogAPI/Controllers/ProductsController.cs) `SearchProducts()` method (line ~43)
-   - **Issue**: String concatenation: `"SELECT * FROM Products WHERE Name LIKE '%" + name + "%'"`
-   - **Impact**: Attacker can execute arbitrary SQL queries
+    - **Location**: [ProductsController.cs](../src/PartsCatalogAPI/Controllers/ProductsController.cs) `SearchProducts()` method (line ~43)
+    - **Issue**: String concatenation: `"SELECT * FROM Products WHERE Name LIKE '%" + name + "%'"`
+    - **Impact**: Attacker can execute arbitrary SQL queries
 
 2. **Critical: SQL Injection**
-   - **Location**: [CategoriesController.cs](../src/PartsCatalogAPI/Controllers/CategoriesController.cs) `GetCategoryByName()` method (line ~43)
-   - **Issue**: String concatenation: `"SELECT * FROM Categories WHERE Name = '" + name + "'"`
+    - **Location**: [CategoriesController.cs](../src/PartsCatalogAPI/Controllers/CategoriesController.cs) `GetCategoryByName()` method (line ~43)
+    - **Issue**: String concatenation: `"SELECT * FROM Categories WHERE Name = '" + name + "'"`
 
 3. **Critical: Missing Authentication**
-   - **Location**: Both controllers
-   - **Issue**: No `[Authorize]` attributes on controllers or actions
-   - **Impact**: Unauthenticated users can modify data
+    - **Location**: Both controllers
+    - **Issue**: No `[Authorize]` attributes on controllers or actions
+    - **Impact**: Unauthenticated users can modify data
 
 4. **High: Hardcoded Credentials**
-   - **Location**: [Web.config](../src/PartsCatalogAPI/Web.config)
-   - **Issue**: Admin credentials and API keys in clear text
-   - **Secrets**: AdminUsername, AdminPassword, ApiKey
+    - **Location**: [Web.config](../src/PartsCatalogAPI/Web.config)
+    - **Issue**: Admin credentials and API keys in clear text
+    - **Secrets**: AdminUsername, AdminPassword, ApiKey
 
 5. **High: Outdated Packages with CVEs**
-   - **Location**: [packages.config](../src/PartsCatalogAPI/packages.config)
-   - **Issue**: Newtonsoft.Json 9.0.1 (2016) - multiple known CVEs
-   - **Issue**: Entity Framework 6.1.3 (2015) - outdated
+    - **Location**: [packages.config](../src/PartsCatalogAPI/packages.config)
+    - **Issue**: Newtonsoft.Json 9.0.1 (2016) - multiple known CVEs
+    - **Issue**: Entity Framework 6.1.3 (2015) - outdated
 
 6. **Medium: No HTTPS Enforcement**
-   - **Location**: [Web.config](../src/PartsCatalogAPI/Web.config)
-   - **Issue**: API accepts HTTP requests without redirect
+    - **Location**: [Web.config](../src/PartsCatalogAPI/Web.config)
+    - **Issue**: API accepts HTTP requests without redirect
 
 7. **Medium: Synchronous Database Operations**
-   - **Location**: All controller methods
-   - **Issue**: Using `Find()`, `ToList()` instead of async patterns
+    - **Location**: All controller methods
+    - **Issue**: Using `Find()`, `ToList()` instead of async patterns
 
 ## Success Criteria
 
@@ -189,7 +184,6 @@ Your agent should identify issues like these in the PartsCatalogAPI:
 - [ ] Agent is recognized in Copilot Chat (appears in the agent dropdown)
 - [ ] Ran comparative analysis showing improved results
 - [ ] Generated structured security report
-- [ ] Security report saved
 - [ ] You can explain the difference custom agents make
 
 ## Troubleshooting
@@ -216,13 +210,8 @@ Your agent should identify issues like these in the PartsCatalogAPI:
 
 ## Reflection Questions
 
-1. What security issues did your custom agent find that generic Copilot missed?
+1. What security issues did your custom agent find that the generic agent missed?
 2. How does having a specialized agent change the quality and depth of analysis?
 3. What other security expertise could you encode for your organization's needs?
 4. How would you evolve this agent based on your company's security standards?
 5. What role will this security context play during the actual migration process?
-
----
-
-**Ready to encode modernization expertise?**  
-Proceed to [Exercise 2: Build a Modernization Skill](./02-modernization-skill.md).

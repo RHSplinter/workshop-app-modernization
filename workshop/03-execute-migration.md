@@ -11,7 +11,7 @@ Now it's time to put your custom agents to work! You'll execute the migration pl
 
 > [!NOTE]
 > You have a migration plan (`migration-plan.md`) created in Exercise 2. In this exercise, you'll ask your modernization agent to execute it phase-by-phase.
-> Your agents maintain context across all these steps. They "remember" what you've changed and ensure consistent patterns throughout.
+> Your agents maintain context during the session. They "remember" what you've changed and ensure consistent patterns throughout.
 > In VS Code, choose agents from the chat dropdown. Switch between agents as needed for each prompt.
 
 ## Executing Your Migration Plan
@@ -28,15 +28,6 @@ Your migration plan likely breaks down the work into phases (project structure, 
 4. **Apply the generated changes**: Make the code updates based on the agent's guidance
 5. **Move to next phase**: Repeat for each phase in your plan
 
-> [!TIP]
-> **Working Through Phases**: For each phase in your migration plan, tell the agent something like:
-> - "Here's Phase 2 from my migration plan: [paste relevant section]"
-> - "Walk me through how to execute this phase step-by-step"
-> - "Generate the code changes needed for this phase"
-> - "After you provide the changes, I'll apply them and then ask you about the next phase"
->
-> This keeps the agent focused on one phase at a time while maintaining context about your overall migration strategy.
-
 ## Part 1: Starting the Migration
 
 ### Step 1: Review Your Migration Plan
@@ -51,11 +42,11 @@ Open `migration-plan.md` that you created in Exercise 2. Note:
 
 1. Open Copilot Chat (`Ctrl+I`)
 2. Select your **modernization agent** from the dropdown
-3. Add the migration plan to the context (select the file in the chat window or reference the name with #)
+3. Add the migration plan to the context (select the file in the chat window or reference the file name with '#{file-name}')
 4. Ask the agent to execute the plan **step-by-step**. Using a step-by-step approach ensures that:
-    - The agent only works on small parts at a time.
+    - The agent only works on small changes at a time.
     - You can review the work between steps and adjust accordingly.
-4. As the agent works through each phase, review the changes. Make changes when necessary or ask questions to the agent if unclear.
+5. As the agent works through each phase, review the changes. Make changes when necessary or ask questions to the agent if unclear.
 
 > [!WARNING]
 > Don't commit actual passwords or API keys! Your security agent should remind you about this. Use:
@@ -69,35 +60,32 @@ Once you've completed all phases of the migration plan, it's time to validate th
 ### Step 1: Build and Test the Application
 
 1. Run the build:
-   ```bash
-   dotnet restore
-   dotnet build
-   ```
-
+    ```bash
+    dotnet restore
+    dotnet build
+    ```
 2. **If you encounter build errors:**
-   - Paste the error message to your modernization agent
-   - Ask what the cause is and how to fix it
-   - Your agents can help troubleshoot common issues like missing package references, namespace conflicts, or API compatibility problems
-
+    - Paste the error message to your modernization agent
+    - Ask what the cause is and how to fix it
+    - Your agents can help troubleshoot common issues like missing package references, namespace conflicts, or API compatibility problems
 3. Run the application:
-   ```bash
-   dotnet run --project src/PartsCatalogAPI
-   ```
-   - The API should start on `https://localhost:5001` (or as configured)
-   - Watch the console output for any startup errors
+    ```bash
+    dotnet run --project src/PartsCatalogAPI
+    ```
+    - The API should start on `https://localhost:5001` (or as configured)
+    - Watch the console output for any startup errors
 
 ### Step 2: Validate All Endpoints
 
 1. Navigate to: `https://localhost:5001/swagger`
-
 2. Test each endpoint to ensure they work:
-   - **GET** `/api/products` - Should return all products
-   - **GET** `/api/products/{id}` - Should return single product
-   - **GET** `/api/products/Search?name=brake` - **Critically**: Should work WITHOUT SQL injection!
-   - **POST** `/api/products` - Should create a product
-   - **PUT** `/api/products/{id}` - Should update a product
-   - **DELETE** `/api/products/{id}` - Should delete a product
-   - Repeat for Categories endpoints
+    - **GET** `/api/products` - Should return all products
+    - **GET** `/api/products/{id}` - Should return single product
+    - **GET** `/api/products/Search?name=brake` - **Critically**: Should work WITHOUT SQL injection!
+    - **POST** `/api/products` - Should create a product
+    - **PUT** `/api/products/{id}` - Should update a product
+    - **DELETE** `/api/products/{id}` - Should delete a product
+    - Repeat for Categories endpoints
 
 > [!NOTE]
 > If you added authentication in your migration plan, you'll need a valid JWT token to test protected endpoints.
@@ -105,25 +93,22 @@ Once you've completed all phases of the migration plan, it's time to validate th
 ### Step 3: Verify Security Fixes
 
 1. **SQL Injection Test**: Try `GET /api/products/Search?name='; DROP TABLE Products; --`
-   - ✅ **Expected**: Should return empty results or error, **NOT** execute SQL
-   - ❌ **Old behavior**: Would have executed the malicious SQL
-
+    - ✅ **Expected**: Should return empty results or error, **NOT** execute SQL
+    - ❌ **Old behavior**: Would have executed the malicious SQL
 2. **Authentication Test** (if configured): Try calling POST/PUT/DELETE without a token
-   - ✅ **Expected**: 401 Unauthorized
-   - ❌ **Old behavior**: Would have allowed the operation
+    - ✅ **Expected**: 401 Unauthorized
+    - ❌ **Old behavior**: Would have allowed the operation
 
 ### Step 4: Generate Final Security Report
 
 1. Switch to your **security agent** in the Copilot Chat dropdown
-
 2. Ask it to perform a final security audit of the modernized PartsCatalogAPI, requesting:
-   - A comparison to the original audit in `security-audit.md`
-   - Which vulnerabilities were fixed during the migration
-   - What security improvements were made
-   - Any remaining concerns or recommendations
-   - A before vs after security score
-   - A comparison report suitable for your team
-
+    - A comparison to the original audit in `security-audit.md`
+    - Which vulnerabilities were fixed during the migration
+    - What security improvements were made
+    - Any remaining concerns or recommendations
+    - A before vs after security score
+    - A comparison report suitable for your team
 3. Save the response as `security-audit-after-migration.md`
 
 **Expected improvements:**
@@ -141,37 +126,36 @@ Your migration plan is complete! If you have additional time, consider these opt
 ### Step 1: Add Health Checks
 
 Ask your modernization agent how to add health check endpoints for monitoring, including:
-   - Basic liveness check at /health
-   - Database connectivity check
-   - Configuration in Program.cs
-   - Response formatting options
+    - Basic liveness check at /health
+    - Database connectivity check
+    - Configuration in Program.cs
+    - Response formatting options
 
 Health checks are critical for containerized deployments and production monitoring.
 
 ### Step 2: Add Structured Logging
 
 Ask your agent to configure structured logging, requesting:
-   - Console logging in structured format
-   - Correlation IDs for request tracking
-   - Different log levels for Development vs Production
-   - Required packages and Program.cs updates
+- Console logging in structured format
+- Correlation IDs for request tracking
+- Different log levels for Development vs Production
+- Required packages and Program.cs updates
 
 Structured logging improves observability in production environments.
 
 ### Step 3: Consider Additional Modernizations
 
 Ask your agent what other modern .NET 10 features could enhance this API, such as:
-   - Response caching strategies
-   - Rate limiting middleware
-   - OpenTelemetry for distributed tracing
-   - Minimal APIs as an alternative to controllers
-   - Native AOT compilation
+- Response caching strategies
+- Rate limiting middleware
+- OpenTelemetry for distributed tracing
+- Minimal APIs as an alternative to controllers
+- Native AOT compilation
 
 Evaluate which features make sense for your production use case.
 
 ## Success Criteria
 
-- [ ] Reviewed migration plan from Exercise 2
 - [ ] Executed migration plan with agent guidance
 - [ ] All controllers modernized (async, ControllerBase, IActionResult)
 - [ ] EF6 migrated to EF Core 9
@@ -182,7 +166,6 @@ Evaluate which features make sense for your production use case.
 - [ ] Swagger/OpenAPI documentation accessible
 - [ ] All endpoints tested and working
 - [ ] Security audit shows significant improvement
-- [ ] Final security report generated
 
 ## Troubleshooting
 
@@ -221,24 +204,6 @@ If issues persist, check package versions and compatibility.
 - Verify `app.UseSwagger()` and `app.UseSwaggerUI()` are in pipeline
 - Only enable in Development: `if (app.Environment.IsDevelopment())`
 
-## Reflection: Impact of Custom Agents
-
-### Without Custom Agents
-- ⏱️ **Time**: 2-3 days of research, trial/error, documentation reading
-- 🔍 **Context Loss**: Constantly losing track of what you changed
-- ❌ **Inconsistency**: Different patterns across files
-- 🐛 **Missed Issues**: Security vulnerabilities overlooked
-- 📚 **Cognitive Load**: Juggling framework differences, security, best practices
-- 🔄 **Repetition**: Explaining context to generic AI repeatedly
-
-### With Custom Agents
-- ⏱️ **Time**: 2-3 hours of guided, systematic migration
-- 🧠 **Context Retained**: Agents remember all changes and maintain consistency
-- ✅ **Consistency**: Same patterns applied throughout the codebase
-- 🛡️ **Security Validated**: Security agent catches vulnerabilities proactively
-- 🎯 **Focused Work**: Agents handle research and pattern matching
-- 🤝 **Collaboration**: Multiple specialized agents working together
-
 ## Reflection Questions
 
 1. How many times did your agents reference earlier context or maintain consistency?
@@ -246,17 +211,3 @@ If issues persist, check package versions and compatibility.
 3. How did having both modernization and security agents improve the outcome?
 4. What additional patterns or knowledge would you add to your skill for future migrations?
 5. How would you apply this agent-assisted approach on your real-world projects?
-
-## What You've Learned
-
-- ✅ How to create and use custom agents with specific expertise
-- ✅ How to build reusable skills that agents can reference
-- ✅ How multiple agents can collaborate on complex tasks
-- ✅ How to migrate .NET Framework applications to modern .NET systematically
-- ✅ How to fix security vulnerabilities during modernization
-- ✅ How custom agents maintain context and ensure consistency
-
----
-
-**Congratulations! You've completed the migration!**  
-Proceed to [Review & Next Steps](./04-review.md).
