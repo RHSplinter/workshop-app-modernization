@@ -22,11 +22,11 @@ In this workshop, you'll modernize a legacy .NET Framework 4.8 Web API applicati
 <!-- TODO: Validate duration -->
 | Step | Exercise | Duration | Topic | Description |
 |------|----------|----------|-------|-------------|
-| 00 | [Prerequisites][ex0] | 10 min | Setup | Fork the repo and verify environment |
-| 01 | [Security Agent][ex1] | 25 min | Security Analysis | Create a security agent and audit the legacy app |
-| 02 | [Modernization Skill & Agent][ex2] | 30 min | Migration Strategy | Build reusable modernization expertise |
-| 03 | [Execute Migration][ex3] | 35 min | Hands-on Migration | Modernize the application to .NET 10 |
-| 04 | [Review][ex4] | 15 min | Summary | Review results and discuss real-world applications |
+| 01 | [Prerequisites][ex1] | 10 min | Setup | Fork the repo and verify environment |
+| 02 | [Security Agent][ex2] | 25 min | Security Analysis | Create a security agent and audit the legacy app |
+| 03 | [Modernization Skill & Agent][ex3] | 30 min | Migration Strategy | Build reusable modernization expertise |
+| 04 | [Execute Migration][ex4] | 35 min | Hands-on Migration | Modernize the application to .NET 10 |
+| 05 | [Review][ex5] | 15 min | Summary | Review results and discuss real-world applications |
 
 ## Learning Objectives
 
@@ -74,8 +74,8 @@ You'll work with a **Product Catalog API** - a realistic .NET Framework 4.8 Web 
 
 *Happy coding with GitHub Copilot! 🚀*
 
-[ex0]: ./00-prereqs.md
-[ex1]: ./01-security-agent.md
-[ex2]: ./02-migration-skill.md
-[ex3]: ./03-execute-migration.md
-[ex4]: ./04-review.md
+[ex1]: ./01-prereqs.md
+[ex2]: ./02-security-agent.md
+[ex3]: ./03-migration-skill.md
+[ex4]: ./04-execute-migration.md
+[ex5]: ./05-review.md

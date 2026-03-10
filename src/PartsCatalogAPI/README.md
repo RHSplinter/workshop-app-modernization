@@ -187,7 +187,7 @@ By the end of this workshop, you will understand:
 
 ## 📖 Additional Resources
 
-- [Workshop Guide](../../workshop/README.md)
+- [Workshop Guide](../../workshop/00-overview.md)
 - [.NET Upgrade Assistant](https://dotnet.microsoft.com/platform/upgrade-assistant)
 - [ASP.NET Core Migration Documentation](https://learn.microsoft.com/aspnet/core/migration/)
 - [GitHub Copilot Documentation](https://docs.github.com/copilot)
@@ -202,4 +202,4 @@ This is a workshop sample project. If you find issues or have suggestions for im
 
 ---
 
-**Ready to modernize?** Head to the [workshop guide](../../workshop/README.md) to get started!
+**Ready to modernize?** Head to the [workshop guide](../../workshop/00-overview.md) to get started!

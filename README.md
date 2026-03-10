@@ -8,9 +8,9 @@ In this 2-hour workshop, you'll learn to leverage custom GitHub Copilot agents a
 
 ## 🚀 Start the Workshop
 
-**To begin the workshop, start at [workshop/README.md](./workshop/README.md)**
+**To begin the workshop, start at [workshop/00-overview.md](./workshop/00-overview.md)**
 
-Or visit the [published workshop site](https://YOUR-USERNAME.github.io/workshop-app-modernization).
+Or visit the [published workshop site](https://rhsplinter.github.io/workshop-app-modernization).
 
 ## 📋 What You'll Learn
 
@@ -45,15 +45,14 @@ This workshop includes a real-world sample: a legacy Parts Catalog API with inte
 │   ├── light-theme.css
 │   └── theme-toggle.js
 ├── workshop/       # Workshop content (markdown)
-│   ├── README.md   # Workshop overview
-│   ├── 00-prereqs.md
-│   ├── 01-first-exercise.md
-│   ├── 02-second-exercise.md
-│   ├── 03-review.md
-│   └── images/     # Screenshots and diagrams
+│   ├── 00-overview.md
+│   ├── 01-prereqs.md
+│   ├── 02-security-agent.md
+│   ├── 03-migration-skill.md
+│   ├── 04-execute-migration.md
+│   └── 05-review.md
 ├── .github/
 │   ├── copilot-instructions.md
-│   ├── instructions/
 │   └── workflows/deploy.yml
 ├── README.md
 └── LICENSE

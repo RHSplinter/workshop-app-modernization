@@ -55,12 +55,12 @@
 
     <script>
         const steps = [
-            { id: 'readme', file: 'workshop/README.md', title: 'Workshop Overview', number: '📚' },
-            { id: '00-prereqs', file: 'workshop/00-prereqs.md', title: 'Prerequisites', number: '00' },
-            { id: '01-security-agent', file: 'workshop/01-security-agent.md', title: 'Create Security Analysis Agent', number: '01' },
-            { id: '02-migration-skill', file: 'workshop/02-migration-skill.md', title: 'Build Migration Skill & Agent', number: '02' },
-            { id: '03-execute-migration', file: 'workshop/03-execute-migration.md', title: 'Execute the Migration', number: '03' },
-            { id: '04-review', file: 'workshop/04-review.md', title: 'Review & Next Steps', number: '04' },
+            { id: '00-overview', file: 'workshop/00-overview.md', title: 'Workshop Overview', number: '📚' },
+            { id: '01-prereqs', file: 'workshop/01-prereqs.md', title: 'Prerequisites', number: '00' },
+            { id: '02-security-agent', file: 'workshop/02-security-agent.md', title: 'Create Security Analysis Agent', number: '01' },
+            { id: '03-migration-skill', file: 'workshop/03-migration-skill.md', title: 'Build Migration Skill & Agent', number: '02' },
+            { id: '04-execute-migration', file: 'workshop/04-execute-migration.md', title: 'Execute the Migration', number: '03' },
+            { id: '05-review', file: 'workshop/05-review.md', title: 'Review & Next Steps', number: '04' },
         ];
 
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
@@ -70,7 +70,7 @@
 
         function getStepFromURL() {
             const params = new URLSearchParams(window.location.search);
-            return params.get('step') || 'readme';
+            return params.get('step') || '00-overview';
         }
 
         function buildSidebar() {
