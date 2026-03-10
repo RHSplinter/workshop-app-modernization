@@ -4,7 +4,7 @@ A hands-on workshop for learning how to modernize .NET Framework applications to
 
 ## 🎯 Workshop Overview
 
-In this 2-hour workshop, you'll learn to leverage custom GitHub Copilot agents and skills to modernize a legacy .NET Framework 4.8 Web API application. You'll discover how specialized agents dramatically improve code migration, security analysis, and modernization tasks compared to generic AI assistance.
+In this workshop, you'll learn to leverage custom GitHub Copilot agents and skills to modernize a legacy .NET Framework 4.8 Web API application. You'll discover how specialized agents dramatically improve code migration, security analysis, and modernization tasks compared to generic AI assistance.
 
 ## 🚀 Start the Workshop
 
