@@ -9,7 +9,6 @@ using PartsCatalogAPI.Models;
 
 namespace PartsCatalogAPI.Controllers
 {
-    // SECURITY ISSUE: No authorization required
     public class ProductsController : ApiController
     {
         private PartsCatalogContext db = new PartsCatalogContext();
@@ -32,20 +31,16 @@ namespace PartsCatalogAPI.Controllers
             return Ok(product);
         }
 
-        // SECURITY ISSUE: SQL Injection vulnerability
         // GET: api/Products/Search?name=brake
         [HttpGet]
         [Route("api/Products/Search")]
         public IHttpActionResult SearchProducts(string name)
-        {
-            // Vulnerable to SQL injection - concatenating user input directly
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             var results = new List<Product>();
 
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                // SECURITY ISSUE: String concatenation leads to SQL injection
                 string query = "SELECT * FROM Products WHERE Name LIKE '%" + name + "%'";
                 
                 using (var command = new SqlCommand(query, connection))
@@ -72,7 +67,6 @@ namespace PartsCatalogAPI.Controllers
             return Ok(results);
         }
 
-        // SECURITY ISSUE: Allows price manipulation without authorization
         // POST: api/Products
         public IHttpActionResult PostProduct(Product product)
         {
@@ -85,12 +79,11 @@ namespace PartsCatalogAPI.Controllers
             product.IsActive = true;
 
             db.Products.Add(product);
-            db.SaveChanges(); // ISSUE: Synchronous operation - should be async
+            db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = product.Id }, product);
         }
 
-        // SECURITY ISSUE: No authorization check before updating prices
         // PUT: api/Products/5
         public IHttpActionResult PutProduct(int id, Product product)
         {
@@ -112,7 +105,7 @@ namespace PartsCatalogAPI.Controllers
 
             existingProduct.Name = product.Name;
             existingProduct.Description = product.Description;
-            existingProduct.Price = product.Price; // SECURITY ISSUE: Anyone can change prices
+            existingProduct.Price = product.Price;
             existingProduct.StockQuantity = product.StockQuantity;
             existingProduct.Sku = product.Sku;
             existingProduct.CategoryId = product.CategoryId;
@@ -120,12 +113,11 @@ namespace PartsCatalogAPI.Controllers
             existingProduct.LastModifiedDate = DateTime.Now;
             existingProduct.IsActive = product.IsActive;
 
-            db.SaveChanges(); // ISSUE: Synchronous operation
+            db.SaveChanges();
 
             return Ok(existingProduct);
         }
 
-        // SECURITY ISSUE: No authorization check before deletion
         // DELETE: api/Products/5
         public IHttpActionResult DeleteProduct(int id)
         {
@@ -136,12 +128,11 @@ namespace PartsCatalogAPI.Controllers
             }
 
             db.Products.Remove(product);
-            db.SaveChanges(); // ISSUE: Synchronous operation
+            db.SaveChanges();
 
             return Ok(product);
         }
 
-        // SECURITY ISSUE: Exposes sensitive admin functionality without authentication
         // GET: api/Products/LowStock
         [HttpGet]
         [Route("api/Products/LowStock")]
@@ -154,7 +145,6 @@ namespace PartsCatalogAPI.Controllers
             return Ok(lowStockProducts);
         }
 
-        // SECURITY ISSUE: Debug endpoint that exposes internal data
         // GET: api/Products/Debug
         [HttpGet]
         [Route("api/Products/Debug")]
@@ -168,7 +158,6 @@ namespace PartsCatalogAPI.Controllers
                 DatabaseName = db.Database.Connection.Database,
                 ServerName = db.Database.Connection.DataSource,
                 DebugMode = debugMode,
-                // SECURITY ISSUE: Exposing credentials
                 AdminUser = ConfigurationManager.AppSettings["AdminUsername"],
                 ApiKey = ConfigurationManager.AppSettings["ApiKey"]
             };

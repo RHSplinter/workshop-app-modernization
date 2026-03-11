@@ -9,7 +9,6 @@ using PartsCatalogAPI.Models;
 
 namespace PartsCatalogAPI.Controllers
 {
-    // SECURITY ISSUE: No authorization required
     public class CategoriesController : ApiController
     {
         private PartsCatalogContext db = new PartsCatalogContext();
@@ -32,20 +31,16 @@ namespace PartsCatalogAPI.Controllers
             return Ok(category);
         }
 
-        // SECURITY ISSUE: SQL Injection vulnerability
-        // GET: api/Categories/ByName?name=Brakes
         [HttpGet]
         [Route("api/Categories/ByName")]
         public IHttpActionResult GetCategoryByName(string name)
         {
-            // Vulnerable to SQL injection
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             Category result = null;
 
             using (var connection = new SqlConnection(connectionString))
             {
                 connection.Open();
-                // SECURITY ISSUE: Direct string concatenation
                 string query = "SELECT * FROM Categories WHERE Name = '" + name + "'";
                 
                 using (var command = new SqlCommand(query, connection))
@@ -90,8 +85,6 @@ namespace PartsCatalogAPI.Controllers
             return Ok(products);
         }
 
-        // SECURITY ISSUE: No authorization for category creation
-        // POST: api/Categories
         public IHttpActionResult PostCategory(Category category)
         {
             if (!ModelState.IsValid)
@@ -101,13 +94,11 @@ namespace PartsCatalogAPI.Controllers
 
             category.IsActive = true;
             db.Categories.Add(category);
-            db.SaveChanges(); // ISSUE: Synchronous operation
+            db.SaveChanges();
 
             return CreatedAtRoute("DefaultApi", new { id = category.Id }, category);
         }
 
-        // SECURITY ISSUE: No authorization for category updates
-        // PUT: api/Categories/5
         public IHttpActionResult PutCategory(int id, Category category)
         {
             if (!ModelState.IsValid)
@@ -131,13 +122,11 @@ namespace PartsCatalogAPI.Controllers
             existingCategory.ImageUrl = category.ImageUrl;
             existingCategory.IsActive = category.IsActive;
 
-            db.SaveChanges(); // ISSUE: Synchronous operation
+            db.SaveChanges();
 
             return Ok(existingCategory);
         }
 
-        // SECURITY ISSUE: No authorization for category deletion
-        // DELETE: api/Categories/5
         public IHttpActionResult DeleteCategory(int id)
         {
             var category = db.Categories.Find(id);
@@ -146,15 +135,12 @@ namespace PartsCatalogAPI.Controllers
                 return NotFound();
             }
 
-            // ISSUE: No check for existing products in category
             db.Categories.Remove(category);
-            db.SaveChanges(); // ISSUE: Synchronous operation
+            db.SaveChanges();
 
             return Ok(category);
         }
 
-        // SECURITY ISSUE: Mass update without authorization
-        // PUT: api/Categories/BulkUpdate
         [HttpPut]
         [Route("api/Categories/BulkUpdate")]
         public IHttpActionResult BulkUpdateCategories(List<Category> categories)
@@ -170,7 +156,7 @@ namespace PartsCatalogAPI.Controllers
                 }
             }
 
-            db.SaveChanges(); // ISSUE: Synchronous operation
+            db.SaveChanges();
 
             return Ok(new { Updated = categories.Count });
         }

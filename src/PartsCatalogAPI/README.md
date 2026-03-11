@@ -94,7 +94,7 @@ PartsCatalogAPI/
 
 ## ⚠️ Important Notes
 
-1. **DO NOT USE IN PRODUCTION**: This application contains intentional security vulnerabilities
+1. **DO NOT USE IN PRODUCTION**: This application is for educational purposes only
 2. **Educational Purpose Only**: Designed specifically for the App Modernization workshop
 3. **No Real Data**: Use only test data, never production or sensitive information
 4. **Local Development Only**: Run only in isolated local development environments

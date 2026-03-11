@@ -84,15 +84,9 @@ Now you'll create a specialized agent that knows how to scan .NET Framework appl
 ### Step 1: Run Targeted Security Scan with Your Agent
 
 Now let's see how your custom agent performs on the same analysis:
-
 1. Open Copilot Chat (`Ctrl+I`)
 2. Use the agent dropdown to select your custom agent
-3. Request a comprehensive security audit of the PartsCatalogAPI. Ask for:
-    - Analysis of all controllers for injection vulnerabilities
-    - Review of packages.config for known CVEs
-    - Configuration files checked for exposed secrets and insecure settings
-    - Evaluation of authentication and authorization implementation
-    - A prioritized report with severity levels and remediation guidance
+3. Request another comprehensive security audit of the controllers.
 4. **Compare the results** with your baseline scan from Part 1:  
     **What improved?**
     - Does the agent provide more specific context and remediation?
@@ -114,9 +108,9 @@ Ask your agent to analyze the `SearchProducts()` and `GetCategoryByName()` metho
     - An executive summary with vulnerability counts organized by severity
     - Critical findings with specific file paths referenced
     - Code snippets showing the vulnerable patterns
-    - A remediation roadmap indicating what to fix before, during, and after migration
+    - A remediation roadmap indicating what to fix before, during, and after migration to .NET 10
     - Package upgrade recommendations with specific version numbers
-2. Request the output to be saved to `SECURITY_AUDIT.md`.
+2. Request the output to be saved to `security_audit.md`.
 
 ## Reflection: What's Different?
 
