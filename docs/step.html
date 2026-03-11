@@ -55,13 +55,16 @@
 
     <script>
         const steps = [
+            { id: 'facilitator', file: 'docs/facilitator-guide.md', title: 'Facilitator Guide', number: '🎤', hidden: true },
             { id: '00-overview', file: 'workshop/00-overview.md', title: 'Workshop Overview', number: '📚' },
-            { id: '01-prereqs', file: 'workshop/01-prereqs.md', title: 'Prerequisites', number: '00' },
-            { id: '02-security-agent', file: 'workshop/02-security-agent.md', title: 'Create Security Analysis Agent', number: '01' },
-            { id: '03-migration-skill', file: 'workshop/03-migration-skill.md', title: 'Build Migration Skill & Agent', number: '02' },
-            { id: '04-execute-migration', file: 'workshop/04-execute-migration.md', title: 'Execute the Migration', number: '03' },
-            { id: '05-review', file: 'workshop/05-review.md', title: 'Review & Next Steps', number: '04' },
+            { id: '01-prereqs', file: 'workshop/01-prereqs.md', title: 'Prerequisites', number: '01' },
+            { id: '02-security-agent', file: 'workshop/02-security-agent.md', title: 'Create Security Analysis Agent', number: '02' },
+            { id: '03-migration-skill', file: 'workshop/03-migration-skill.md', title: 'Build Migration Skill & Agent', number: '03' },
+            { id: '04-execute-migration', file: 'workshop/04-execute-migration.md', title: 'Execute the Migration', number: '04' },
+            { id: '05-review', file: 'workshop/05-review.md', title: 'Review & Next Steps', number: '05' },
         ];
+
+        const navigableSteps = steps.filter(step => !step.hidden);
 
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
         const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/RHSplinter/workshop-app-modernization/main/';
@@ -75,8 +78,9 @@
 
         function buildSidebar() {
             const nav = document.getElementById('stepNav');
-            nav.innerHTML = steps.map((step, i) => `
-                <a href="?step=${step.id}" class="step-link ${i === currentIndex ? 'active' : ''}" data-index="${i}">
+            const currentStep = steps[currentIndex];
+            nav.innerHTML = navigableSteps.map((step) => `
+                <a href="?step=${step.id}" class="step-link ${currentStep && step.id === currentStep.id ? 'active' : ''}">
                     <span class="step-number">${step.number}</span>
                     <span>${step.title}</span>
                 </a>
@@ -84,14 +88,32 @@
         }
 
         function updateNavButtons() {
-            document.getElementById('prevBtn').disabled = currentIndex === 0;
-            document.getElementById('nextBtn').disabled = currentIndex === steps.length - 1;
+            const currentStep = steps[currentIndex];
+            if (!currentStep || currentStep.hidden) {
+                document.getElementById('prevBtn').disabled = true;
+                document.getElementById('nextBtn').disabled = true;
+                return;
+            }
+
+            const visibleIndex = navigableSteps.findIndex(step => step.id === currentStep.id);
+            document.getElementById('prevBtn').disabled = visibleIndex <= 0;
+            document.getElementById('nextBtn').disabled = visibleIndex === navigableSteps.length - 1;
         }
 
         function buildFooterNav() {
             const footer = document.getElementById('navFooter');
-            const prev = currentIndex > 0 ? steps[currentIndex - 1] : null;
-            const next = currentIndex < steps.length - 1 ? steps[currentIndex + 1] : null;
+            const currentStep = steps[currentIndex];
+            if (!currentStep || currentStep.hidden) {
+                footer.innerHTML = `
+                    <a href="#" class="nav-footer-btn disabled">← Previous</a>
+                    <a href="#" class="nav-footer-btn disabled">Next →</a>
+                `;
+                return;
+            }
+
+            const visibleIndex = navigableSteps.findIndex(step => step.id === currentStep.id);
+            const prev = visibleIndex > 0 ? navigableSteps[visibleIndex - 1] : null;
+            const next = visibleIndex < navigableSteps.length - 1 ? navigableSteps[visibleIndex + 1] : null;
             footer.innerHTML = `
                 <a href="${prev ? '?step=' + prev.id : '#'}" class="nav-footer-btn ${!prev ? 'disabled' : ''}">← ${prev ? prev.title : 'Previous'}</a>
                 <a href="${next ? '?step=' + next.id : '#'}" class="nav-footer-btn ${!next ? 'disabled' : ''}">${next ? next.title : 'Next'} →</a>
@@ -99,9 +121,13 @@
         }
 
         function navigate(direction) {
-            const newIndex = currentIndex + direction;
-            if (newIndex >= 0 && newIndex < steps.length) {
-                window.location.href = `?step=${steps[newIndex].id}`;
+            const currentStep = steps[currentIndex];
+            if (!currentStep || currentStep.hidden) return;
+
+            const visibleIndex = navigableSteps.findIndex(step => step.id === currentStep.id);
+            const newIndex = visibleIndex + direction;
+            if (newIndex >= 0 && newIndex < navigableSteps.length) {
+                window.location.href = `?step=${navigableSteps[newIndex].id}`;
             }
         }
 
