@@ -21,11 +21,11 @@ In this workshop, you'll modernize a legacy .NET Framework 4.8 Web API applicati
 
 | Step | Exercise | Duration | Topic | Description |
 |------|----------|----------|-------|-------------|
-| 01 | [Prerequisites][ex1] | 10 min | Setup | Fork the repo and verify environment |
-| 02 | [Security Agent][ex2] | 20 min | Security Analysis | Create a security agent and audit the legacy app |
-| 03 | [Modernization Skill & Agent][ex3] | 25 min | Migration Strategy | Build reusable modernization expertise |
-| 04 | [Execute Migration][ex4] | 25 min | Hands-on Migration | Modernize the application to .NET 10 |
-| 05 | [Review][ex5] | 5 min | Summary | Review results and discuss real-world applications |
+| 01 | [Prerequisites](/workshop/01-prereqs.md) | 10 min | Setup | Fork the repo and verify environment |
+| 02 | [Security Agent](/workshop/02-security-agent.md) | 20 min | Security Analysis | Create a security agent and audit the legacy app |
+| 03 | [Modernization Skill & Agent](/workshop/03-migration-skill.md) | 25 min | Migration Strategy | Build reusable modernization expertise |
+| 04 | [Execute Migration](/workshop/04-execute-migration.md) | 25 min | Hands-on Migration | Modernize the application to .NET 10 |
+| 05 | [Review](/workshop/05-review.md) | 5 min | Summary | Review results and discuss real-world applications |
 
 ## Learning Objectives
 
@@ -65,16 +65,11 @@ You'll work with a **Product Catalog API** - a realistic .NET Framework 4.8 Web 
 
 ## Support
 
-- **During the workshop**: Raise your hand or use the chat to ask questions
+- **During the workshop**: Reach out to the proctors at at any time for questions or guidance
 - **After the workshop**: Open an issue in this repository
 - **GitHub Copilot Docs**: [docs.github.com/copilot](https://docs.github.com/en/copilot)
+- **Awesome Copilot**: [github.com/github/awesome-copilot](https://github.com/github/awesome-copilot)
 
 ---
 
 *Happy coding with GitHub Copilot! 🚀*
-
-[ex1]: ./01-prereqs.md
-[ex2]: ./02-security-agent.md
-[ex3]: ./03-migration-skill.md
-[ex4]: ./04-execute-migration.md
-[ex5]: ./05-review.md

@@ -4,13 +4,13 @@ A hands-on workshop for learning how to modernize .NET Framework applications to
 
 ## 🎯 Workshop Overview
 
-In this workshop, you'll learn to leverage custom GitHub Copilot agents and skills to modernize a legacy .NET Framework 4.8 Web API application. You'll discover how specialized agents dramatically improve code migration, security analysis, and modernization tasks compared to generic AI assistance.
+In this workshop, you'll learn to leverage custom GitHub Copilot agents and skills to modernize a legacy .NET Framework 4.8 Web API application. You'll discover how specialized agents significantly improve code migration, security analysis, and modernization tasks compared to generic AI assistance.
 
 ## 🚀 Start the Workshop
 
-**To begin the workshop, start at [workshop/00-overview.md](./workshop/00-overview.md)**
+**To begin the workshop, start at the [published workshop site](https://rhsplinter.github.io/workshop-app-modernization)**
 
-Or visit the [published workshop site](https://rhsplinter.github.io/workshop-app-modernization).
+Or check out the workshop locally at [workshop/00-overview.md](./workshop/00-overview.md).
 
 ## 📋 What You'll Learn
 
@@ -24,14 +24,7 @@ Or visit the [published workshop site](https://rhsplinter.github.io/workshop-app
 
 ## 🧪 Sample Application
 
-This workshop includes a real-world sample: a legacy Parts Catalog API with intentional security vulnerabilities and outdated patterns. The application demonstrates common challenges in enterprise .NET Framework applications:
-
-- SQL injection vulnerabilities
-- Missing authentication/authorization
-- Hardcoded credentials
-- Outdated dependencies (e.g., Newtonsoft.Json 9.0.1)
-- Synchronous database operations
-- Legacy configuration patterns
+This workshop includes a real-world sample: a legacy Parts Catalog API with intentional security vulnerabilities and outdated patterns. You'll apply the skills you learn to analyze and modernize this application step-by-step throughout the workshop.
 
 👉 **See the sample project**: [src/PartsCatalogAPI](./src/PartsCatalogAPI)
 
@@ -58,14 +51,10 @@ This workshop includes a real-world sample: a legacy Parts Catalog API with inte
 └── LICENSE
 ```
 
-## Publishing
-
-The workshop site deploys automatically to GitHub Pages when you push to `main`. Enable GitHub Pages in your repository settings (Settings → Pages → Source: GitHub Actions).
-
 ## License
 
 This project is licensed under the terms of the MIT open source license. Please refer to the [LICENSE](./LICENSE) for the full terms.
 
 ## Support
 
-This project is provided as-is, and may be updated over time. If you have questions, please open an issue.
+If you have questions, please open an issue.

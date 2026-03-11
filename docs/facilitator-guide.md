@@ -125,6 +125,14 @@ By the end, participants should be able to:
 - Encourage participants to save baseline security report from generic agent for comparison.
 - Validate custom agent file placement and naming conventions.
 - Ask participants to request structured findings with severity and remediation.
+- Intended vulnerabilities include:
+    - Missing authentication and authorization
+    - SQL injection vulnerabilities
+    - Synchronous executions for database operations
+    - Sensitive admin functionality and internal data exposed without authentication
+    - Custom errors is turned on
+    - Connection strings and passwords in plain text
+    - No HTTPS enforcement
 
 **Checkpoint signals:**
 
