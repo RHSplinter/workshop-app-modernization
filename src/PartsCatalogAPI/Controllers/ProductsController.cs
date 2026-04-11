@@ -35,6 +35,7 @@ namespace PartsCatalogAPI.Controllers
         [HttpGet]
         [Route("api/Products/Search")]
         public IHttpActionResult SearchProducts(string name)
+        {
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             var results = new List<Product>();
 

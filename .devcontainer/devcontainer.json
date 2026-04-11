@@ -2,6 +2,10 @@
   "name": ".NET Framework to .NET 10 Migration Workshop",
   "image": "mcr.microsoft.com/devcontainers/dotnet:1-10.0",
 
+  "features": {
+    "ghcr.io/devcontainers/features/mssql:1": {}
+  },
+
   "customizations": {
     "vscode": {
       "extensions": [
