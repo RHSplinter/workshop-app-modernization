@@ -11,8 +11,7 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- TODO: Update the title -->
-    <title>Workshop Title</title>
+    <title>App Modernization with GitHub Copilot</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -26,8 +25,7 @@
         <div class="header-content">
             <a href="index.html" class="header-brand">
                 <span class="header-icon">🚀</span>
-                <!-- TODO: Update header title -->
-                <span class="header-title">Workshop Title</span>
+                <span class="header-title">App Modernization with GitHub Copilot</span>
             </a>
             <div class="header-nav">
                 <button class="theme-toggle" onclick="toggleTheme()">☀️ Light</button>
@@ -56,30 +54,33 @@
     </div>
 
     <script>
-        // TODO: Update the steps array to match your workshop/ markdown files
         const steps = [
-            { id: 'readme', file: 'workshop/README.md', title: 'Workshop Overview', number: '📚' },
-            { id: '00-prereqs', file: 'workshop/00-prereqs.md', title: 'Prerequisites', number: '00' },
-            { id: '01-first-exercise', file: 'workshop/01-first-exercise.md', title: 'First Exercise', number: '01' },
-            { id: '02-second-exercise', file: 'workshop/02-second-exercise.md', title: 'Second Exercise', number: '02' },
-            { id: '03-review', file: 'workshop/03-review.md', title: 'Review & Next Steps', number: '03' },
+            { id: 'facilitator', file: 'docs/facilitator-guide.md', title: 'Facilitator Guide', number: '🎤', hidden: true },
+            { id: '00-overview', file: 'workshop/00-overview.md', title: 'Workshop Overview', number: '📚' },
+            { id: '01-prereqs', file: 'workshop/01-prereqs.md', title: 'Prerequisites', number: '01' },
+            { id: '02-security-agent', file: 'workshop/02-security-agent.md', title: 'Create Security Analysis Agent', number: '02' },
+            { id: '03-migration-skill', file: 'workshop/03-migration-skill.md', title: 'Build Migration Skill & Agent', number: '03' },
+            { id: '04-execute-migration', file: 'workshop/04-execute-migration.md', title: 'Execute the Migration', number: '04' },
+            { id: '05-review', file: 'workshop/05-review.md', title: 'Review & Next Steps', number: '05' },
         ];
 
-        // TODO: Update the GitHub org/repo name
+        const navigableSteps = steps.filter(step => !step.hidden);
+
         const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
-        const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/copilot-dev-days/REPO_NAME/main/';
+        const GITHUB_RAW_BASE = isLocal ? '../' : 'https://raw.githubusercontent.com/RHSplinter/workshop-app-modernization/main/';
 
         let currentIndex = 0;
 
         function getStepFromURL() {
             const params = new URLSearchParams(window.location.search);
-            return params.get('step') || 'readme';
+            return params.get('step') || '00-overview';
         }
 
         function buildSidebar() {
             const nav = document.getElementById('stepNav');
-            nav.innerHTML = steps.map((step, i) => `
-                <a href="?step=${step.id}" class="step-link ${i === currentIndex ? 'active' : ''}" data-index="${i}">
+            const currentStep = steps[currentIndex];
+            nav.innerHTML = navigableSteps.map((step) => `
+                <a href="?step=${step.id}" class="step-link ${currentStep && step.id === currentStep.id ? 'active' : ''}">
                     <span class="step-number">${step.number}</span>
                     <span>${step.title}</span>
                 </a>
@@ -87,14 +88,32 @@
         }
 
         function updateNavButtons() {
-            document.getElementById('prevBtn').disabled = currentIndex === 0;
-            document.getElementById('nextBtn').disabled = currentIndex === steps.length - 1;
+            const currentStep = steps[currentIndex];
+            if (!currentStep || currentStep.hidden) {
+                document.getElementById('prevBtn').disabled = true;
+                document.getElementById('nextBtn').disabled = true;
+                return;
+            }
+
+            const visibleIndex = navigableSteps.findIndex(step => step.id === currentStep.id);
+            document.getElementById('prevBtn').disabled = visibleIndex <= 0;
+            document.getElementById('nextBtn').disabled = visibleIndex === navigableSteps.length - 1;
         }
 
         function buildFooterNav() {
             const footer = document.getElementById('navFooter');
-            const prev = currentIndex > 0 ? steps[currentIndex - 1] : null;
-            const next = currentIndex < steps.length - 1 ? steps[currentIndex + 1] : null;
+            const currentStep = steps[currentIndex];
+            if (!currentStep || currentStep.hidden) {
+                footer.innerHTML = `
+                    <a href="#" class="nav-footer-btn disabled">← Previous</a>
+                    <a href="#" class="nav-footer-btn disabled">Next →</a>
+                `;
+                return;
+            }
+
+            const visibleIndex = navigableSteps.findIndex(step => step.id === currentStep.id);
+            const prev = visibleIndex > 0 ? navigableSteps[visibleIndex - 1] : null;
+            const next = visibleIndex < navigableSteps.length - 1 ? navigableSteps[visibleIndex + 1] : null;
             footer.innerHTML = `
                 <a href="${prev ? '?step=' + prev.id : '#'}" class="nav-footer-btn ${!prev ? 'disabled' : ''}">← ${prev ? prev.title : 'Previous'}</a>
                 <a href="${next ? '?step=' + next.id : '#'}" class="nav-footer-btn ${!next ? 'disabled' : ''}">${next ? next.title : 'Next'} →</a>
@@ -102,9 +121,13 @@
         }
 
         function navigate(direction) {
-            const newIndex = currentIndex + direction;
-            if (newIndex >= 0 && newIndex < steps.length) {
-                window.location.href = `?step=${steps[newIndex].id}`;
+            const currentStep = steps[currentIndex];
+            if (!currentStep || currentStep.hidden) return;
+
+            const visibleIndex = navigableSteps.findIndex(step => step.id === currentStep.id);
+            const newIndex = visibleIndex + direction;
+            if (newIndex >= 0 && newIndex < navigableSteps.length) {
+                window.location.href = `?step=${navigableSteps[newIndex].id}`;
             }
         }
 
@@ -120,7 +143,7 @@
             });
 
             // Convert internal .md links to step.html links
-            md = md.replace(/\[([^\]]+)\]\((?:\.\/)?workshop\/(\d+)-([^)]+)\.md\)/g, function(match, text, num, slug) {
+            md = md.replace(/\[([^\]]+)\]\((?:\.|\/)?workshop\/(\d+)-([^)]+)\.md\)/g, function(match, text, num, slug) {
                 const stepId = num.replace(/^0+/, '0') + '-' + slug;
                 const found = steps.find(s => s.id === stepId || s.file === `workshop/${num}-${slug}.md`);
                 if (found) {
@@ -169,7 +192,7 @@
                 contentEl.innerHTML = `
                     <div class="markdown">
                         <h1>${step.title}</h1>
-                        <p>Could not load content. Please check the <a href="https://github.com/copilot-dev-days/REPO_NAME" target="_blank">GitHub repository</a> directly.</p>
+                        <p>Could not load content. Please check the <a href="https://github.com/RHSplinter/workshop-app-modernization" target="_blank">GitHub repository</a> directly.</p>
                         <p style="color: var(--text-secondary); font-size: 0.875rem;">Error: ${err.message}</p>
                     </div>`;
             }

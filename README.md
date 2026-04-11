@@ -1,14 +1,34 @@
-# Workshop Title
+# App Modernization with GitHub Copilot
 
-<!-- TODO: Update this with your workshop details -->
+A hands-on workshop for learning how to modernize .NET Framework applications to .NET 10 using custom GitHub Copilot agents and skills.
 
-This repository contains the project for a guided workshop. Visit the published site or follow the workshop steps in the `workshop/` directory.
+## 🎯 Workshop Overview
 
-## Start the workshop
+In this workshop, you'll learn to leverage custom GitHub Copilot agents and skills to modernize a legacy .NET Framework 4.8 Web API application. You'll discover how specialized agents significantly improve code migration, security analysis, and modernization tasks compared to generic AI assistance.
 
-**To begin the workshop, start at [workshop/README.md](./workshop/README.md)**
+## 🚀 Start the Workshop
 
-Or visit the [published workshop site](https://copilot-dev-days.github.io/REPO_NAME).
+**To begin the workshop:**
+1. Copy the exerice to your account
+2. Checkout the [published workshop site](https://rhsplinter.github.io/workshop-app-modernization)
+
+[![](https://img.shields.io/badge/Copy%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=RHSplinter&template_name=workshop-app-modernization&owner=%40me&name=workshop-app-modernization&description=Exercise:+Modernize+Applications+With+Custom+Agents+And+Skills&visibility=public)
+
+
+## 📋 What You'll Learn
+
+- ✅ Create custom GitHub Copilot agents with domain-specific expertise
+- ✅ Build reusable skills that can be shared across agents
+- ✅ Identify security vulnerabilities in legacy code
+- ✅ Migrate .NET Framework 4.8 applications to .NET 10
+- ✅ Modernize Entity Framework 6 to EF Core 9
+- ✅ Compare the effectiveness of custom agents vs. generic Copilot agent mode
+
+## 🧪 Sample Application
+
+This workshop includes a real-world sample: a legacy Parts Catalog API with intentional security vulnerabilities and outdated patterns. You'll apply the skills you learn to analyze and modernize this application step-by-step throughout the workshop.
+
+👉 **See the sample project**: [src/PartsCatalogAPI](./src/PartsCatalogAPI)
 
 ## Repository Structure
 
@@ -20,30 +40,18 @@ Or visit the [published workshop site](https://copilot-dev-days.github.io/REPO_N
 │   ├── light-theme.css
 │   └── theme-toggle.js
 ├── workshop/       # Workshop content (markdown)
-│   ├── README.md   # Workshop overview
-│   ├── 00-prereqs.md
-│   ├── 01-first-exercise.md
-│   ├── 02-second-exercise.md
-│   ├── 03-review.md
-│   └── images/     # Screenshots and diagrams
+│   ├── 00-overview.md
+│   ├── 01-prereqs.md
+│   ├── 02-security-agent.md
+│   ├── 03-migration-skill.md
+│   ├── 04-execute-migration.md
+│   └── 05-review.md
 ├── .github/
 │   ├── copilot-instructions.md
-│   ├── instructions/
 │   └── workflows/deploy.yml
 ├── README.md
 └── LICENSE
 ```
-
-## Customizing This Template
-
-1. Update all `TODO` comments in `docs/index.html` and `docs/step.html`
-2. Replace the placeholder workshop steps in `workshop/`
-3. Update `REPO_NAME` references to your actual repository name
-4. Add your application code alongside the workshop content
-
-## Publishing
-
-The workshop site deploys automatically to GitHub Pages when you push to `main`. Enable GitHub Pages in your repository settings (Settings → Pages → Source: GitHub Actions).
 
 ## License
 
@@ -51,4 +59,4 @@ This project is licensed under the terms of the MIT open source license. Please 
 
 ## Support
 
-This project is provided as-is, and may be updated over time. If you have questions, please open an issue.
+If you have questions, please open an issue.
