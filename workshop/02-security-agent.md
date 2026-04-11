@@ -4,7 +4,7 @@ In this exercise, you'll discover the power of custom agents by comparing generi
 
 ## Why a Security Agent?
 
-Generic Copilot agents doesn't know:
+Generic Copilot agents don't know:
 - **Your organization's security standards** (OWASP compliance, specific CVE thresholds)
 - **Your framework-specific risks** (Framework vulnerabilities, legacy authentication patterns)
 - **Your security priorities** (what must be fixed before migration vs what can wait)
@@ -110,7 +110,7 @@ Ask your agent to analyze the `SearchProducts()` and `GetCategoryByName()` metho
     - Code snippets showing the vulnerable patterns
     - A remediation roadmap indicating what to fix before, during, and after migration to .NET 10
     - Package upgrade recommendations with specific version numbers
-2. Request the output to be saved to `security_audit.md`.
+2. Request the output to be saved to `security-audit.md`.
 
 ## Reflection: What's Different?
 

@@ -7,7 +7,7 @@ Welcome to this hands-on workshop! Transform complex modernization projects into
 Learn to build custom GitHub Copilot agents and skills that transform risky modernization projects from weeks into hours. You'll create security-aware agents that audit your codebase, identify vulnerabilities, and execute framework upgrades while maintaining context across hundreds of files.
 
 **Duration:** ~1.5 hours  
-**Format:** Hands-on coding with your own fork
+**Format:** Hands-on coding with your own repository
 
 ### What You'll Build
 
@@ -21,9 +21,9 @@ In this workshop, you'll modernize a legacy .NET Framework 4.8 Web API applicati
 
 | Step | Exercise | Duration | Topic | Description |
 |------|----------|----------|-------|-------------|
-| 01 | [Prerequisites](/workshop/01-prereqs.md) | 10 min | Setup | Fork the repo and verify environment |
+| 01 | [Prerequisites](/workshop/01-prereqs.md) | 10 min | Setup | Copy the repo and verify environment |
 | 02 | [Security Agent](/workshop/02-security-agent.md) | 20 min | Security Analysis | Create a security agent and audit the legacy app |
-| 03 | [Modernization Skill & Agent](/workshop/03-migration-skill.md) | 25 min | Migration Strategy | Build reusable modernization expertise |
+| 03 | [Modernization Skill & Agent](/workshop/03-migration-skill.md) | 20 min | Migration Strategy | Build reusable modernization expertise |
 | 04 | [Execute Migration](/workshop/04-execute-migration.md) | 25 min | Hands-on Migration | Modernize the application to .NET 10 |
 | 05 | [Review](/workshop/05-review.md) | 5 min | Summary | Review results and discuss real-world applications |
 
@@ -38,7 +38,7 @@ By the end of this workshop, you will be able to:
 
 ## Why Custom Agents for Modernization?
 
-Generic Copilot agents great for code completion, but complex modernization requires:
+Generic Copilot agents are great for code completion, but complex modernization requires:
 
 - **Context Retention** - Agents remember your full migration strategy across hundreds of files
 - **Domain Expertise** - Skills encode security standards and patterns that generic LLMs might miss
@@ -48,7 +48,7 @@ Generic Copilot agents great for code completion, but complex modernization requ
 
 ## The Sample Application
 
-You'll work with a **Product Catalog API** - a realistic .NET Framework 4.8 Web API with intentional security issues and legacy patterns:
+You'll work with a **Parts Catalog API** - a realistic .NET Framework 4.8 Web API with intentional security issues and legacy patterns:
 
 - **Framework:** .NET Framework 4.8 Web API
 - **Data Access:** Entity Framework 6 with SQL Server
@@ -65,7 +65,7 @@ You'll work with a **Product Catalog API** - a realistic .NET Framework 4.8 Web 
 
 ## Support
 
-- **During the workshop**: Reach out to the proctors at at any time for questions or guidance
+- **During the workshop**: Reach out to the proctors at any time for questions or guidance
 - **After the workshop**: Open an issue in this repository
 - **GitHub Copilot Docs**: [docs.github.com/copilot](https://docs.github.com/en/copilot)
 - **Awesome Copilot**: [github.com/github/awesome-copilot](https://github.com/github/awesome-copilot)

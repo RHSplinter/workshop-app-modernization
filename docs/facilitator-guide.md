@@ -42,11 +42,11 @@ This guide is for workshop proctors and facilitators delivering the **App Modern
   - .NET SDK 10+
   - SQL Server LocalDB or SQL Server Express
   - C# Dev Kit (if using VS Code locally)
-- Run a complete dry run through Step 04 on your own fork.
+- Run a complete dry run through Step 04 on your own repo.
 
 ### 2. Facilitation assets
 
-- Keep one "golden" repo fork prepared at key checkpoints:
+- Keep one "golden" repo repo prepared at key checkpoints:
   - After Step 02 completed
   - After Step 03 completed
   - After Step 04 completed

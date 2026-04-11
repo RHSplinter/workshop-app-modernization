@@ -76,7 +76,7 @@ You'll create a skill that documents everything needed to migrate .NET Framework
 Now you'll create an agent that can consult your migration skill and guide developers through the modernization process.
 
 1. Create a new file: `.github/agents/modernization-expert.agent.md`
-2. Design your agent gent definition. Include guidance on:
+2. Design your agent definition. Include guidance on:
     - Role and behavior (what kind of migration expert it should act like)
     - How it should use the migration skill for framework-specific decisions
     - Preferred workflow (assess, plan, guide, validate, enhance)

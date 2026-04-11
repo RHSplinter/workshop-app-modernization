@@ -6,23 +6,25 @@
 - One of the following:
     - Access to GitHub Codespaces. The codespace contains all required tools.
     - A supported IDE, preferably [Visual Studio Code](https://code.visualstudio.com/).
-        - THe GitHub Copilot extension. Be sure to sign in to your GitHub account within the IDE.
+        - The GitHub Copilot extension. Be sure to sign in to your GitHub account within the IDE.
         - [C# Dev Kit Extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit) if using VS Code
         - [.NET 10 SDK](https://dotnet.microsoft.com/download) to build the .NET application
         - [**SQL Server Express** or **SQL Server LocalDB**](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (comes with Visual Studio)
 
 ## Environment Setup
 
-### 1. Fork and Clone the Repository
+### 1. Setup the project
 
-Fork this repository to your GitHub account (click **Fork** button at top right)
+Copy the project to your account.
+
+[![](https://img.shields.io/badge/Copy%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=RHSplinter&template_name=workshop-app-modernization&owner=%40me&name=workshop-app-modernization&description=Exercise:+Modernize+Applications+With+Custom+Agents+And+Skills&visibility=public)
 
 ### 2. Open in Visual Studio Code or Codespaces
 
 Choose one option:
 
 **Option A: Local VS Code**
-1. Clone your fork locally:
+1. Clone your repository locally:
     ```bash
     git clone https://github.com/{YOUR-GITHUB-HANDLE}/workshop-app-modernization.git
     cd workshop-app-modernization
@@ -34,7 +36,10 @@ Choose one option:
 
 **Option B: GitHub Codespaces**
 
-Open your fork on GitHub, click **Code** > **Codespaces** > **Create codespace on main**.
+Open your repository on GitHub, click **Code** > **Codespaces** > **Create codespace on main**.
+
+> [!NOTE]
+> You can use 120 hours of of [GitHub CodeSpaces](https://github.com/features/codespaces) for free each month.
 
 ### 3. Verify GitHub Copilot is Active
 
@@ -83,12 +88,12 @@ If not, you can:
 
 ### 6. Explore the Legacy Application
 
-The sample application is in the `src/ProductCatalogAPI` folder.
+The sample application is in the `src/PartsCatalogAPI` folder.
 
 Take a moment to explore the structure:
 
 ```
-ProductCatalogAPI/
+PartsCatalogAPI/
 ├── App_Start/           # Web API configuration
 ├── Controllers/         # API controllers
 ├── Data/                # EF6 DbContext
@@ -119,7 +124,7 @@ Your goal: Transform this into a secure, modern .NET 10 API with:
 
 ## ✅ Checkpoint
 
-- [ ] Repository forked and cloned
+- [ ] Repository copied and cloned
 - [ ] VS Code open with the project
 - [ ] GitHub Copilot active and responding
 - [ ] .NET SDK 10 installed and working

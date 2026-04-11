@@ -8,9 +8,12 @@ In this workshop, you'll learn to leverage custom GitHub Copilot agents and skil
 
 ## 🚀 Start the Workshop
 
-**To begin the workshop, start at the [published workshop site](https://rhsplinter.github.io/workshop-app-modernization)**
+**To begin the workshop:**
+1. Copy the exerice to your account
+2. Checkout the [published workshop site](https://rhsplinter.github.io/workshop-app-modernization)
 
-Or check out the workshop locally at [workshop/00-overview.md](./workshop/00-overview.md).
+[![](https://img.shields.io/badge/Copy%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=RHSplinter&template_name=workshop-app-modernization&owner=%40me&name=workshop-app-modernization&description=Exercise:+Modernize+Applications+With+Custom+Agents+And+Skills&visibility=public)
+
 
 ## 📋 What You'll Learn
 
@@ -19,7 +22,6 @@ Or check out the workshop locally at [workshop/00-overview.md](./workshop/00-ove
 - ✅ Identify security vulnerabilities in legacy code
 - ✅ Migrate .NET Framework 4.8 applications to .NET 10
 - ✅ Modernize Entity Framework 6 to EF Core 9
-- ✅ Implement async/await patterns and dependency injection
 - ✅ Compare the effectiveness of custom agents vs. generic Copilot agent mode
 
 ## 🧪 Sample Application
