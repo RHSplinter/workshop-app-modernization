@@ -9,10 +9,9 @@ Now it's time to put your custom agents to work! You'll execute the migration pl
 - Fix security vulnerabilities during modernization
 - Validate that the modernized application works correctly
 
-> [!NOTE]
-> You have a migration plan (`migration-plan.md`) created in Exercise 2. In this exercise, you'll ask your modernization agent to execute it phase-by-phase.
-> Your agents maintain context during the session. They "remember" what you've changed and ensure consistent patterns throughout.
-> In VS Code, choose agents from the chat dropdown. Switch between agents as needed for each prompt.
+You have a migration plan (`migration-plan.md`) created in Exercise 2. In this exercise, you'll ask your modernization agent to execute it phase-by-phase.
+
+Your agents maintain context during the session. They "remember" what you've changed and ensure consistent patterns throughout. In VS Code, choose agents from the chat dropdown. Switch between agents as needed for each prompt.
 
 ## Executing Your Migration Plan
 
@@ -40,7 +39,7 @@ Open `migration-plan.md` that you created in Exercise 2. Note:
 
 ### Step 2: Execute Phase 1 - Project Structure
 
-1. Open Copilot Chat (`Ctrl+I`)
+1. Open Copilot Chat (`Ctrl+Shift+I`)
 2. Select your **modernization agent** from the dropdown
 3. Add the migration plan to the context (select the file in the chat window or reference the file name with '#{file-name}')
 4. Ask the agent to execute the plan **step-by-step**. Using a step-by-step approach ensures that:
@@ -49,9 +48,7 @@ Open `migration-plan.md` that you created in Exercise 2. Note:
 5. As the agent works through each phase, review the changes. Make changes when necessary or ask questions to the agent if unclear.
 
 > [!WARNING]
-> Don't commit actual passwords or API keys! Your security agent should remind you about this. Use:
-> - User Secrets for local development
-> - Azure Key Vault or environment variables for production
+> Don't commit actual passwords or API keys! Your security agent should remind you about this.
 
 ## Part 2: Testing & Validation
 
@@ -158,7 +155,7 @@ Evaluate which features make sense for your production use case.
 
 - [ ] Executed migration plan with agent guidance
 - [ ] All controllers modernized (async, ControllerBase, IActionResult)
-- [ ] EF6 migrated to EF Core 9
+- [ ] EF6 migrated to EF Core 10
 - [ ] Configuration moved from Web.config to appsettings.json
 - [ ] SQL injection vulnerabilities fixed and verified
 - [ ] Application builds without errors

@@ -42,11 +42,13 @@ You'll create a skill that documents everything needed to migrate .NET Framework
         }
         
         // .NET 10
+        [ApiController]
+        [Route("api/[controller]")]
         public class ProductsController : ControllerBase
         {
             private readonly PartsCatalogContext _context;
             public ProductsController(PartsCatalogContext context) => _context = context;
-            
+
             [HttpGet]
             public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
                 => await _context.Products.ToListAsync();
@@ -60,9 +62,11 @@ You'll create a skill that documents everything needed to migrate .NET Framework
         - Async is required (can't mix sync database calls)
         - Model binding needs explicit attributes like `[FromBody]`
         - Package replacements (e.g., `EntityFramework` → `Microsoft.EntityFrameworkCore.SqlServer`)
+    
+    - Links to resources useful during the migration for deep dives, e.g. the [official migration docs](https://learn.microsoft.com/en-us/aspnet/core/migration/).
 
 > [!TIP]
-> Use tables, code snippets, or any format that works for your team! The examples above are starting points - experiment with what best captures your migration knowledge. You can link to [official migration docs](https://learn.microsoft.com/en-us/aspnet/core/migration/) for deep dives.
+> Use tables, code snippets, or any format that works for your team! The examples above are starting points - experiment with what best captures your migration knowledge.
 
 > [!NOTE]
 > Keep it focused on patterns and decisions specific to your migration. Add phase-by-phase strategies, package mappings, or architectural notes as needed for your project.
@@ -100,7 +104,7 @@ Agent should:
 
 Let's verify your agent can guide the PartsCatalogAPI migration:
 
-1. Open Copilot Chat (`Ctrl+I`)
+1. Open Copilot Chat (`Ctrl+Shift+I`)
 2. Use the agent dropdown to select your modernization agent
 3. Ask the agent to analyze `ProductsController.cs` and provide migration guidance. Consider asking about:
     - What .NET Framework patterns exist in the current code
@@ -125,14 +129,7 @@ Switch to your **Security Agent** in the dropdown and ask it to review the Produ
 **Notice the difference:**
 - **Modernization Agent**: Focuses on framework patterns, breaking changes, best practices
 - **Security Agent**: Focuses on vulnerabilities, secure coding, authentication
-- **Both together**: Comprehensive migration that's secure and modern!
-
-> [!TIP]
-> You can switch agents in the dropdown during the same conversation:
-> ```
-> Select the modernization agent and ask: provide the migration approach
-> Switch to the security agent and ask: review for security issues
-> ```
+- **Both together**: Comprehensive migration that's secure and modern
 
 ### Step 5: Create a Complete Migration Plan
 

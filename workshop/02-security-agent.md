@@ -34,7 +34,7 @@ The `src/PartsCatalogAPI` folder contains a .NET Framework 4.8 Web API with:
 
 ### Step 2: Run a Generic Security Analysis
 
-1. Open GitHub Copilot Chat (`Ctrl+I` on Windows or `Cmd+I` on Mac)
+1. Open GitHub Copilot Chat (`Ctrl+Shift+I` on Windows or `Cmd+Shift+I` on Mac)
 2. In agent mode, request a comprehensive security audit of the controllers.
 3. Observe the results:
     - How comprehensive is the analysis?
@@ -52,7 +52,7 @@ The `src/PartsCatalogAPI` folder contains a .NET Framework 4.8 Web API with:
 Now you'll create a specialized agent that knows how to scan .NET Framework applications for security vulnerabilities with migration context. GitHub Copilot supports [creating custom agents](https://docs.github.com/en/copilot/how-tos/use-copilot-agents/coding-agent/create-custom-agents) that can be tailored to your specific needs, with detailed [configuration options](https://docs.github.com/en/copilot/reference/custom-agents-configuration) available in the official documentation.
 
 > [!TIP]
-> The [Awesome Copilot Repository](https://github.com/github/awesome-copilot) is a community-driven toolkit for Copilot, which includes custom agents, skills and more!
+> The Awesome Copilot repository (github.com/github/awesome-copilot) is a community-driven toolkit for Copilot, which includes custom agents, skills and more!
 
 1. Create a new folder structure:
     ```
@@ -73,18 +73,18 @@ Now you'll create a specialized agent that knows how to scan .NET Framework appl
 2. Use the agent selector dropdown in the chat interface and choose your custom agent
 3. You should see your agent name appear (e.g., "Security Expert")
 
-> [!NOTE]
-> If you don't see it, try:
-> - Reload VS Code window (`Ctrl+Shift+P` → "Reload Window")
-> - Check that the file path is exactly `.github/agents/security-expert.agent.md`
-> - Verify the YAML frontmatter is valid
+**Troubleshooting:**  
+If you don't see it, try:
+- Reload VS Code window (`Ctrl+Shift+P` → "Reload Window")
+- Check that the file path is exactly `.github/agents/security-expert.agent.md`
+- Verify the YAML frontmatter is valid
 
 ## Part 3: Specialized Security Scan
 
 ### Step 1: Run Targeted Security Scan with Your Agent
 
 Now let's see how your custom agent performs on the same analysis:
-1. Open Copilot Chat (`Ctrl+I`)
+1. Open Copilot Chat (`Ctrl+Shift+I`)
 2. Use the agent dropdown to select your custom agent
 3. Request another comprehensive security audit of the controllers.
 4. **Compare the results** with your baseline scan from Part 1:  

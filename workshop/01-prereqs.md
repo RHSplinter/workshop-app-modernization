@@ -9,7 +9,7 @@
         - The GitHub Copilot extension. Be sure to sign in to your GitHub account within the IDE.
         - [C# Dev Kit Extension](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csdevkit) if using VS Code
         - [.NET 10 SDK](https://dotnet.microsoft.com/download) to build the .NET application
-        - [**SQL Server Express** or **SQL Server LocalDB**](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (comes with Visual Studio)
+        - [**SQL Server Express** or **SQL Server LocalDB**](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) (optional; comes with Visual Studio)
 
 ## Environment Setup
 
@@ -39,19 +39,19 @@ Choose one option:
 Open your repository on GitHub, click **Code** > **Codespaces** > **Create codespace on main**.
 
 > [!NOTE]
-> You can use 120 hours of of [GitHub CodeSpaces](https://github.com/features/codespaces) for free each month.
+> You can use 60 hours of GitHub CodeSpaces for free each month.
 
 ### 3. Verify GitHub Copilot is Active
 
 1. Look for the Copilot icon in the bottom-right status bar of VS Code
 2. Open any file and start typing a comment - you should see inline suggestions
-3. Test the Copilot chat by pressing `Ctrl+I` (or `Cmd+I` on Mac)
+3. Test the Copilot chat by pressing `Ctrl+Shift+I` (or `Cmd+Shift+I` on Mac)
 
-> [!TIP]  
-> If Copilot isn't working, check:
-> - Your subscription is active at [github.com/settings/copilot](https://github.com/settings/copilot)
-> - The Copilot extension is installed and enabled in VS Code
-> - You're signed into GitHub in VS Code (bottom-left account icon)
+**Troubleshooting:**  
+If Copilot isn't working, check if:
+- Your subscription is active at [github.com/settings/copilot](https://github.com/settings/copilot)
+- The Copilot extension is installed and enabled in VS Code
+- You're signed into GitHub in VS Code (bottom-left account icon)
 
 ### 4. Verify .NET Installation
 
@@ -70,9 +70,11 @@ dotnet --list-sdks
 ```
 
 > [!TIP]
-> If you don't have .NET 10+, download it from [dotnet.microsoft.com/download](https://dotnet.microsoft.com/download)
+> If you don't have .NET 10+, download it from 'https://dotnet.microsoft.com/download'
 
-### 5. Verify SQL Server
+### 5. Verify SQL Server (Optional)
+
+SQL Server is only required if you want to test API endpoints against a live database. You can complete the majority of the workshop without it.
 
 Check if LocalDB is available:
 
@@ -128,5 +130,5 @@ Your goal: Transform this into a secure, modern .NET 10 API with:
 - [ ] VS Code open with the project
 - [ ] GitHub Copilot active and responding
 - [ ] .NET SDK 10 installed and working
-- [ ] SQL Server LocalDB available
+- [ ] SQL Server LocalDB available (optional)
 - [ ] You understand the challenge ahead

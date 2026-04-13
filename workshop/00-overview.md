@@ -52,7 +52,7 @@ You'll work with a **Parts Catalog API** - a realistic .NET Framework 4.8 Web AP
 
 - **Framework:** .NET Framework 4.8 Web API
 - **Data Access:** Entity Framework 6 with SQL Server
-- **Size:** ~500 lines of code
+- **Size:** ~700 lines of code
 - **Issues:** SQL injection, outdated packages, missing auth, synchronous patterns
 
 ## Tips for Success
