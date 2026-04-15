@@ -69,12 +69,12 @@ Once you've completed all phases of the migration plan, it's time to validate th
     ```bash
     dotnet run --project src/PartsCatalogAPI
     ```
-    - The API should start on `https://localhost:5001` (or as configured)
+    - The API should start on `https://localhost:5000` (or as configured)
     - Watch the console output for any startup errors
 
 ### Step 2: Validate All Endpoints
 
-1. Navigate to: `https://localhost:5001/swagger`
+1. Navigate to: `https://localhost:5000/swagger`
 2. Test each endpoint to ensure they work:
     - **GET** `/api/products` - Should return all products
     - **GET** `/api/products/{id}` - Should return single product
