@@ -4,7 +4,7 @@ Welcome to this hands-on workshop! Transform complex modernization projects into
 
 ## Workshop Overview
 
-Learn to build custom GitHub Copilot agents and skills that transform risky modernization projects from weeks into hours. You'll create security-aware agents that audit your codebase, identify vulnerabilities, and execute framework upgrades while maintaining context across hundreds of files.
+Learn to build custom GitHub Copilot agents and skills that transform risky modernization projects from weeks to hours. You'll create security-aware agents that audit your codebase, identify vulnerabilities, and execute framework upgrades while maintaining context across hundreds of files.
 
 **Duration:** ~1.5 hours  
 **Format:** Hands-on coding with your own repository
@@ -21,7 +21,7 @@ In this workshop, you'll modernize a legacy .NET Framework 4.8 Web API applicati
 
 | Step | Exercise | Duration | Topic | Description |
 |------|----------|----------|-------|-------------|
-| 01 | [Prerequisites](/workshop/01-prereqs.md) | 10 min | Setup | Copy the repo and verify environment |
+| 01 | [Prerequisites](/workshop/01-prereqs.md) | 10 min | Setup | Copy the repo and verify the environment |
 | 02 | [Security Agent](/workshop/02-security-agent.md) | 20 min | Security Analysis | Create a security agent and audit the legacy app |
 | 03 | [Modernization Skill & Agent](/workshop/03-migration-skill.md) | 20 min | Migration Strategy | Build reusable modernization expertise |
 | 04 | [Execute Migration](/workshop/04-execute-migration.md) | 25 min | Hands-on Migration | Modernize the application to .NET 10 |

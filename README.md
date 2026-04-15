@@ -9,7 +9,7 @@ In this workshop, you'll learn to leverage custom GitHub Copilot agents and skil
 ## 🚀 Start the Workshop
 
 **To begin the workshop:**
-1. Copy the exerice to your account
+1. Copy the exercise to your account
 2. Checkout the [published workshop site](https://rhsplinter.github.io/workshop-app-modernization)
 
 [![](https://img.shields.io/badge/Copy%20Exercise-%E2%86%92-1f883d?style=for-the-badge&logo=github&labelColor=197935)](https://github.com/new?template_owner=RHSplinter&template_name=workshop-app-modernization&owner=%40me&name=workshop-app-modernization&description=Exercise:+Modernize+Applications+With+Custom+Agents+And+Skills&visibility=public)

@@ -75,7 +75,7 @@ You'll create a skill that documents everything needed to migrate .NET Framework
 
 ## Part 2: Create the Modernization Agent
 
-### Step 2: Design an Agent That Uses Your Skill
+### Step 1: Design an Agent That Uses Your Skill
 
 Now you'll create an agent that can consult your migration skill and guide developers through the modernization process.
 
@@ -100,7 +100,7 @@ Agent should:
 5. Suggest validation steps
 ```
 
-### Step 3: Test Your Agent and Skill Together
+### Step 2: Test Your Agent and Skill Together
 
 Let's verify your agent can guide the PartsCatalogAPI migration:
 
@@ -122,7 +122,7 @@ Let's verify your agent can guide the PartsCatalogAPI migration:
 > [!TIP]
 > Your agent can reference the security agent too. Consider adding a principle: "Consult the security agent for vulnerability fixes during migration."
 
-### Step 4: Compare Agent Approaches
+### Step 3: Compare Agent Approaches
 
 Switch to your **Security Agent** in the dropdown and ask it to review the ProductsController migration plan, flagging any security concerns that should be addressed during the modernization.
 
@@ -131,7 +131,7 @@ Switch to your **Security Agent** in the dropdown and ask it to review the Produ
 - **Security Agent**: Focuses on vulnerabilities, secure coding, authentication
 - **Both together**: Comprehensive migration that's secure and modern
 
-### Step 5: Create a Complete Migration Plan
+### Step 4: Create a Complete Migration Plan
 
 1. With your modernization agent selected, ask it to create a step-by-step migration plan for PartsCatalogAPI.
     - Breakdown into migration phases
@@ -190,7 +190,7 @@ This creates a **multi-agent workflow** where specialized agents collaborate!
 **Agent not using the skill?**
 - Verify the skill folder name matches what your agent instructions reference
 - Make sure the skill's SKILL.md file exists
-- Verify the description of the skill matches the intent
+- Verify that the description of the skill matches the intent
 - Try explicitly asking: "Consult your migration skill for breaking changes"
 
 **Agent responses too generic?**
